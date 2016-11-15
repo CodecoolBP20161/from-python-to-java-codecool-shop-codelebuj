@@ -22,6 +22,8 @@ public class Main {
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");
 
+//        get("/category/:category_id", ProductController::renderProducts, new ThymeleafTemplateEngine());
+
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());
 
@@ -45,11 +47,17 @@ public class Main {
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(tablet);
 
+        ProductCategory notebook = new ProductCategory("notebook", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        productCategoryDataStore.add(notebook);
+
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
 
+        productDataStore.add(new Product("Lenovo Ideapad", 200f, "USD", "hahi", notebook, amazon));
+        productDataStore.add(new Product("Hp Probook", 220f, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", notebook, lenovo));
+        productDataStore.add(new Product("MSI CX61", 300f, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", notebook, amazon));
     }
 
 
