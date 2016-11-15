@@ -22,7 +22,7 @@ public class Main {
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");
 
-//        get("/category/:category_id", ProductController::renderProducts, new ThymeleafTemplateEngine());
+        get("/category/:category_id", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
 
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());
@@ -48,9 +48,10 @@ public class Main {
         productCategoryDataStore.add(allProducts);
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(tablet);
-
-        ProductCategory notebook = new ProductCategory("notebook", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        ProductCategory notebook = new ProductCategory("Notebook", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(notebook);
+        ProductCategory camera = new ProductCategory("Camera", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        productCategoryDataStore.add(camera);
 
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
