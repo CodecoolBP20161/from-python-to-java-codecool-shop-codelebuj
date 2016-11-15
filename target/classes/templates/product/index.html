@@ -33,24 +33,26 @@
     <h1>Codecool Shop</h1>
 </div>
 
-<div class="container">
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Category
-            <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li th:each="category : ${categories}"
-                    th:value="${category.name}">
-                <a th:text="${category.name}" th:attr="href='/category/' + ${category.id}"></a>
-            </li>
-        </ul>
-    </div>
+<div class="dropdown dropdown_place">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Category
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li><a href="/">All Products</a></li>
+        <li th:each="category : ${categories}"
+            th:value="${category.name}">
+            <a th:text="${category.name}" th:attr="href='/category/' + ${category.id}"></a>
+        </li>
+    </ul>
+</div>
+<div class="container" th:each="category : ${filteredCategories}">
+
     <div class="well well-sm">
         <strong th:text="${category.name}">Category Title</strong>
     </div>
 
     <div id="products" class="row list-group">
 
-        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${allProducts}">
+        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${category.products}">
 
             <div class="thumbnail">
                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt="" />

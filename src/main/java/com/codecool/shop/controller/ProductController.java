@@ -19,21 +19,26 @@ import java.util.Map;
 
 public class ProductController {
 
-    public static ModelAndView renderProducts(Request req, Response res) {
-        int categoryId = 1;
-        if(req.params(":category_id") != null) {
-             categoryId = Integer.parseInt(req.params(":category_id"));
-        }
-
+    public static ModelAndView renderProducts(Request req, Response res){
+        int categoryId = Integer.parseInt(req.params(":category_id"));
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 
         Map params = new HashMap<>();
-        params.put("category", productCategoryDataStore.find(categoryId));
         params.put("categories", productCategoryDataStore.getAll());
-        params.put("products", productDataStore.getBy(productCategoryDataStore.find(categoryId)));
-        params.put("allProducts", productDataStore.getAll());
+        params.put("filteredCategories", ProductCategoryDaoMem.getInstance().find(categoryId));
         return new ModelAndView(params, "product/index");
+    }
+
+    public static ModelAndView renderAllProducts(Request req, Response res) {
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+
+        Map params = new HashMap<>();
+        params.put("categories", productCategoryDataStore.getAll());
+        params.put("filteredCategories", params.get("categories"));
+        return new ModelAndView(params, "product/index");
+
     }
 
 }
