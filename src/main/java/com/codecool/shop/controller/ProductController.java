@@ -20,7 +20,7 @@ import java.util.Map;
 public class ProductController {
 
     public static ModelAndView renderProducts(Request req, Response res) {
-         int categoryId = 1;
+        int categoryId = 1;
         if(req.params(":category_id") != null) {
              categoryId = Integer.parseInt(req.params(":category_id"));
         }

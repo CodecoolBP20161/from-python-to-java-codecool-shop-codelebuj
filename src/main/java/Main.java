@@ -44,6 +44,8 @@ public class Main {
         supplierDataStore.add(lenovo);
 
         //setting up a new product category
+        ProductCategory allProducts = new ProductCategory("All Products", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        productCategoryDataStore.add(allProducts);
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(tablet);
 
