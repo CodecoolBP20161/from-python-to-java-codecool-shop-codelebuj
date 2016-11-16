@@ -1,22 +1,11 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.CartImpl;
+import com.codecool.shop.model.Cart;
 
 import spark.Request;
 import spark.Response;
 import spark.ModelAndView;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by levente on 2016.11.16..
@@ -24,8 +13,17 @@ import java.util.Map;
 public class CartController {
 
     public static ModelAndView renderCart(Request req, Response res){
-        req.session("cart", cartObject);
+        Cart cart = req.session().attribute("cart");
+        cart.
         return ModelAndView(params, "product/index");
     }
 
+    public static ModelAndView addToCart(Request req, Response res){
+        Cart cart = new CartImpl();
+        cart.addProduct( product );
+        req.session().attribute("cart", cart);
+
+        return ModelAndView(params, "product/index");
     }
+
+}
