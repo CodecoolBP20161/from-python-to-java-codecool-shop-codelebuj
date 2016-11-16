@@ -22,8 +22,10 @@ public class Main {
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");
 
+        get("/category/:category_id", ProductController::renderProducts, new ThymeleafTemplateEngine());
+
         // Always add generic routes to the end
-        get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());
+        get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
@@ -42,14 +44,24 @@ public class Main {
         supplierDataStore.add(lenovo);
 
         //setting up a new product category
+
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(tablet);
+        ProductCategory notebook = new ProductCategory("Notebook", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        productCategoryDataStore.add(notebook);
+        ProductCategory camera = new ProductCategory("Camera", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        productCategoryDataStore.add(camera);
 
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
 
+        productDataStore.add(new Product("Lenovo Ideapad", 200f, "USD", "hahi", notebook, amazon));
+        productDataStore.add(new Product("Hp Probook", 220f, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", notebook, lenovo));
+        productDataStore.add(new Product("MSI CX61", 300f, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", camera, amazon));
+
+        productDataStore.add(new Product("MSI CX61", 300f, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", notebook, amazon));
     }
 
 
