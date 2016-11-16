@@ -22,10 +22,13 @@ public class Main {
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");
 
-        get("/category/:category_id", ProductController::renderProducts, new ThymeleafTemplateEngine());
+        get("/category/:category_id", ProductController::renderProductsByCategory, new ThymeleafTemplateEngine());
+
+        get("/supplier/:supplier_id", ProductController::renderProductsBySupplier, new ThymeleafTemplateEngine());
 
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
+
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
@@ -57,7 +60,7 @@ public class Main {
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
 
-        productDataStore.add(new Product("Lenovo Ideapad", 200f, "USD", "hahi", notebook, amazon));
+        productDataStore.add(new Product("Lenovo Ideapad", 200f, "USD", "hahi", notebook, lenovo));
         productDataStore.add(new Product("Hp Probook", 220f, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", notebook, lenovo));
         productDataStore.add(new Product("MSI CX61", 300f, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", camera, amazon));
 
