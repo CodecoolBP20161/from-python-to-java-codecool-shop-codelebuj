@@ -22,12 +22,9 @@ public class CartController {
     }
 
     public static ModelAndView addToCart(Request req, Response res){
-        Map params = new HashMap<>();
         int productId = Integer.parseInt(req.params(":product_id"));
         ProductDao productDataStore = ProductDaoMem.getInstance();
         Product product = productDataStore.find(productId);
-
-
         Cart cart = (Cart) req.session().attribute("cart");
 
         if (cart == null) {
@@ -38,8 +35,6 @@ public class CartController {
         req.session().attribute("cart", cart);
         System.out.println(cart);
         res.redirect("/");
-        cart.getTotalQuantity();
-//        params.put("totalQ", CartImpl());
         return null;
     }
 

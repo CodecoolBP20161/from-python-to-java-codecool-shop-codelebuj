@@ -26,6 +26,7 @@ public class Main {
         get("/category/:category_id", ProductController::renderProductsByCategory, new ThymeleafTemplateEngine());
 
         get("/cart/:product_id", CartController::addToCart, new ThymeleafTemplateEngine());
+
         get("/supplier/:supplier_id", ProductController::renderProductsBySupplier, new ThymeleafTemplateEngine());
 
         // Always add generic routes to the end

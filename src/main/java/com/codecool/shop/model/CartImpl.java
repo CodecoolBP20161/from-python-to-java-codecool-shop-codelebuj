@@ -29,26 +29,29 @@ public class CartImpl implements Cart {
                 System.out.println("The for is started");
                 if (item.getProduct() == product) {
                     System.out.println("the lineItem conatains that product"+product);
-                    item.setQuantity(item.getQuantity());
+                    item.increaseQuantity(1);
+                    isIn = true;
+                    break;
                 }
                 else{
-                    System.out.println("bollean true");
-                    isIn = true;
+                    System.out.println("lineitem does not exist");
                 }
             }
-            if(isIn == true) {
+            if (isIn == false) {
                 System.out.println("If out of for"+product);
-                lineItems.add(new LineItem(product,0));
+                lineItems.add(new LineItem(product,1));
             }
         }
     }
 
     @Override
     public int getTotalQuantity() {
-        for (LineItem quantity : this.lineItems){
-            this.totalQuantity += quantity.getQuantity();
+        this.totalQuantity = 0;
+        for (LineItem item : this.lineItems){
+            System.out.println(item.getProduct() + "/" + item.getQuantity());
+            this.totalQuantity += item.getQuantity();
         }
-        System.out.println(this.totalQuantity);
+//        System.out.println("getTotatQuantity method"+this.totalQuantity);
         return  this.totalQuantity;
     }
 }

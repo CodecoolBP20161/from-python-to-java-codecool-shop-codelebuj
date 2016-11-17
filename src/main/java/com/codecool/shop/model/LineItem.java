@@ -24,6 +24,10 @@ public class LineItem {
         this.quantity = quantity;
     }
 
+    public void increaseQuantity(int quantity) {
+        this.quantity += quantity;
+    }
+
     public LineItem(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
