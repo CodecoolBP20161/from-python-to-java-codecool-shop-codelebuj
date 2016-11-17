@@ -10,7 +10,7 @@ import java.util.List;
 public class CartImpl implements Cart {
     private List<LineItem> lineItems;
     private int totalQuantity;
-    private int totalPrice;0
+    private int totalPrice;
 
 
     public CartImpl() {
@@ -19,12 +19,13 @@ public class CartImpl implements Cart {
 
     @Override
     public void addProduct(Product product) {
-        if ( this.alreadyInCart(product) ) {
-            // increment quantity
-        } else {
-            lineItems.add( new LineItem(product, 1) );
+        for (LineItem item : lineItems) {
+            if (this.lineItems.contains(product)) {
+                item.setQuantity(item.getQuantity()+1) ;
+            } else {
+                lineItems.add(new LineItem(product, 1));
+            }
         }
-
     }
 
     @Override
