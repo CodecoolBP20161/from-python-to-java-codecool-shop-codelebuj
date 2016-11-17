@@ -4,7 +4,6 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.CartImpl;
 import com.codecool.shop.model.Cart;
-import javax.servlet.http.HttpSession;
 import com.codecool.shop.model.Product;
 import spark.Request;
 import spark.Response;
