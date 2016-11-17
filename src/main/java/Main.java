@@ -35,11 +35,13 @@ public class Main {
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
 
-        get("/cart/show/", ProductController::renderCart, new ThymeleafTemplateEngine());
+//        get("/cart/show/", ProductController::renderCart, new ThymeleafTemplateEngine());
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
     }
+
+
 
     public static void populateData() {
 
