@@ -1,4 +1,5 @@
 import static spark.Spark.*;
+import static spark.Spark.get;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 import com.codecool.shop.controller.CartController;
@@ -29,10 +30,12 @@ public class Main {
 
         get("/supplier/:supplier_id", ProductController::renderProductsBySupplier, new ThymeleafTemplateEngine());
 
+        get("/shoppingcart", ProductController::renderCart, new ThymeleafTemplateEngine());
+
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
 
-        get("/cart/show/", CartController::renderCart, new ThymeleafTemplateEngine());
+        get("/cart/show/", ProductController::renderCart, new ThymeleafTemplateEngine());
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();

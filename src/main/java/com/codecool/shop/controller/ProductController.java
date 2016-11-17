@@ -70,4 +70,13 @@ public class ProductController {
         return new ModelAndView(params, "product/index");
     }
 
+    public static ModelAndView renderCart(Request req, Response res){
+        Map params = new HashMap<>();
+        params.put("categories", productCategoryDataStore.getAll());
+        params.put("suppliers", productSupplierDataStore.getAll());
+        params.put("products", productDataStore.getAll());
+        params.put("cart", getCartQuantity(req));
+        return new ModelAndView(params, "product/shoppingcart");
+    }
+
 }
