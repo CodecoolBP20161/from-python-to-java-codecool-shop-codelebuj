@@ -6,6 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -24,6 +25,16 @@ public class ProductController {
     static private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
     static private SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
 
+    public static int getCartQuantity(Request req) {
+        int totalQuantity = 0;
+        Cart c = req.session().attribute("cart");
+        System.out.println("ok?");
+        if ( c != null ) {
+            totalQuantity = c.getTotalQuantity();
+        }
+        return totalQuantity;
+    }
+
     public static ModelAndView renderProductsByCategory(Request req, Response res){
         int categoryId = Integer.parseInt(req.params(":category_id"));
 
@@ -32,9 +43,8 @@ public class ProductController {
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productCategoryDataStore.find(categoryId).getProducts());
+        params.put("cart", getCartQuantity(req));
         return new ModelAndView(params, "product/index");
-
-
     }
 
     public static ModelAndView renderProductsBySupplier(Request req, Response res){
@@ -45,6 +55,7 @@ public class ProductController {
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("categories", productCategoryDataStore.getAll());
         params.put("products", productSupplierDataStore.find(supplierId).getProducts());
+        params.put("cart", getCartQuantity(req));
         return new ModelAndView(params, "product/index");
     }
 
@@ -55,6 +66,7 @@ public class ProductController {
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productDataStore.getAll());
+        params.put("cart", getCartQuantity(req));
         return new ModelAndView(params, "product/index");
     }
 

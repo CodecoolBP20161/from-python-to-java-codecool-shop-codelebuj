@@ -1,6 +1,7 @@
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
+import com.codecool.shop.controller.CartController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.*;
@@ -24,11 +25,14 @@ public class Main {
 
         get("/category/:category_id", ProductController::renderProductsByCategory, new ThymeleafTemplateEngine());
 
+        get("/cart/:product_id", CartController::addToCart, new ThymeleafTemplateEngine());
+
         get("/supplier/:supplier_id", ProductController::renderProductsBySupplier, new ThymeleafTemplateEngine());
 
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
 
+        get("/cart/show/", CartController::renderCart, new ThymeleafTemplateEngine());
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
@@ -45,6 +49,11 @@ public class Main {
         supplierDataStore.add(amazon);
         Supplier lenovo = new Supplier("Lenovo", "Computers");
         supplierDataStore.add(lenovo);
+        Supplier acer = new Supplier("Acer", "Computers");
+        supplierDataStore.add(acer);
+        Supplier canon = new Supplier("Canon", "Camera");
+        supplierDataStore.add(canon);
+
 
         //setting up a new product category
 
@@ -62,9 +71,9 @@ public class Main {
 
         productDataStore.add(new Product("Lenovo Ideapad", 200f, "USD", "hahi", notebook, lenovo));
         productDataStore.add(new Product("Hp Probook", 220f, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", notebook, lenovo));
-        productDataStore.add(new Product("MSI CX61", 300f, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", camera, amazon));
+        productDataStore.add(new Product("Aspire R 14", 800f, "USD", "Cutting-edge graphics and top performance for the ultimate entertainment experience.", notebook, acer));
 
-        productDataStore.add(new Product("MSI CX61", 300f, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", notebook, amazon));
+        productDataStore.add(new Product("Canon 5D Mark IV", 500f, "USD", "The EOS 5D Mark IV camera builds on the powerful legacy of the 5D series, offering amazing refinements in image quality, performance and versatility.", camera, canon));
     }
 
 

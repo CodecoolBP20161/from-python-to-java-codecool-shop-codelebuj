@@ -6,10 +6,11 @@
 </head>
 
 <body>
-<div th:replace="top :: top">
+
+<div th:replace="navbar :: navbar">
 </div>
 
-<div th:replace="button :: button">
+<div th:replace="top :: top">
 </div>
 
 
@@ -32,7 +33,9 @@
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="#">Add to cart</a>
+                            <form th:action="'/cart/'+ ${prod.id}" method="get">
+                                <button class="btn btn-success">Add to cart</button>
+                            </form>
                         </div>
                     </div>
                 </div>

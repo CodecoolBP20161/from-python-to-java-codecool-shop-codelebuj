@@ -1,5 +1,5 @@
 .glyphicon {
-    margin-right:5px;
+    margin-right:20px;
 }
 .thumbnail
 {
@@ -63,7 +63,6 @@
 
 .dropdown_category
 {
-    left: 76px;
     margin: 10px;
     z-index: 1;
     cursor: pointer;
@@ -74,9 +73,18 @@
 .dropdown_supplier
 {
     margin: 10px;
-    margin-left: 70px;
     z-index: 1;
     cursor: pointer;
     position: relative;
     display: inline-block;
+}
+
+.navbar-fix
+{
+    position: fixed;
+}
+
+.codecoolshop-text
+{
+    margin: 200 px;
 }
