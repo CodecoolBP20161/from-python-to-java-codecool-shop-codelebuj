@@ -10,7 +10,6 @@ import spark.Response;
 import spark.ModelAndView;
 
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class CartController {
@@ -33,7 +32,6 @@ public class CartController {
         }
         cart.addProduct(product);
         req.session().attribute("cart", cart);
-        System.out.println(cart);
         res.redirect("/");
         return null;
     }
