@@ -4,7 +4,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.CartImpl;
 import com.codecool.shop.model.Cart;
-
+import javax.servlet.http.HttpSession;
 import com.codecool.shop.model.Product;
 import spark.Request;
 import spark.Response;
@@ -27,7 +27,12 @@ public class CartController {
         Product product = productDataStore.find(productId);
 
 
-        Cart cart = new CartImpl();
+        Cart cart = (Cart) req.session().attribute("cart");
+
+        if (cart == null) {
+            cart = new CartImpl();
+            req.session().attribute("cart", cart);
+        }
         cart.addProduct(product);
         req.session().attribute("cart", cart);
         System.out.println(cart);
