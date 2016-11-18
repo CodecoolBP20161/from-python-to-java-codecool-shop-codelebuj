@@ -70,6 +70,8 @@ public class ProductController {
     public static ModelAndView renderCart(Request req,Response res){
         Map params = new HashMap<>();
 
+        params.put("categories", productCategoryDataStore.getAll());
+        params.put("suppliers", productSupplierDataStore.getAll());
         params.put("cartp",req.session().attribute("cart"));
         params.put("cartquantity", getCartQuantity(req));
         return new ModelAndView(params, "product/shoppingcart");
