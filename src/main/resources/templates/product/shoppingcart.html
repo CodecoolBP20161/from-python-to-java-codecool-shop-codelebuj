@@ -30,19 +30,27 @@
         <tr th:each="i : ${cartp.lineItems}">
             <div class="item col-xs-4 col-lg-4" >
                 <td th:text="${i.product.getName()}">A</td>
-                <td th:text="${i.getQuantity()}">A</td>
+                <td class="td-size">
+                    <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-plus"></button>
+                    <span class="quanmiddle" th:text="${i.getQuantity()}">A</span><span></span>
+                    <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-minus"></button>
+                </td>
+
+
                 <td th:text="${i.product.getDefaultPrice()}">A</td>
-                <td th:text="${i.getFullPrice()}">A</td>
-                <td>Delete</td>
+                <td class="td-size-plus" th:text="${i.getFullPrice()}">A</td>
+                <td><button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-trash"></span> Trash
+                </button></td>
             </div>
             <!-- - name of the Product-->
 
         </tr>
         </tbody>
          <!--FIX MEE!!!!-->
-        <div align="right">
-        <tr><td><strong><u>Total Price</u></strong></td></tr>
-        <tr th:each="i : ${cartp}"><td th:text="${i.totalPrice()}"></td></tr>
+        <div>
+        <tr class="alnright"><td><td><td><td><td><strong><u>Total Price</u></strong></td></td></td></td></td></tr>
+        <tr class="alnright" th:each="i : ${cartp}"><td><td><td><td><td th:text="${i.totalPrice()}"></td></td></td></td></td></tr>
         </div>
     </table>
 </div>

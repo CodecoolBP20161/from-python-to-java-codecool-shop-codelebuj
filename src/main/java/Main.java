@@ -32,6 +32,7 @@ public class Main {
 
         get("/shoppingcart", ProductController::renderCart, new ThymeleafTemplateEngine());
 
+
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
 

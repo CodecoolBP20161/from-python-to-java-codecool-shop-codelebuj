@@ -71,9 +71,8 @@ public class ProductController {
         Map params = new HashMap<>();
 
         params.put("cartp",req.session().attribute("cart"));
+        params.put("cartquantity", getCartQuantity(req));
         return new ModelAndView(params, "product/shoppingcart");
     }
-
-
 
 }
