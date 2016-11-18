@@ -6,10 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Cart;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.*;
 
 import spark.Request;
 import spark.Response;
@@ -28,12 +25,12 @@ public class ProductController {
     public static int getCartQuantity(Request req) {
         int totalQuantity = 0;
         Cart c = req.session().attribute("cart");
-        System.out.println("ok?");
         if ( c != null ) {
             totalQuantity = c.getTotalQuantity();
         }
         return totalQuantity;
     }
+
 
     public static ModelAndView renderProductsByCategory(Request req, Response res){
         int categoryId = Integer.parseInt(req.params(":category_id"));
@@ -43,7 +40,7 @@ public class ProductController {
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productCategoryDataStore.find(categoryId).getProducts());
-        params.put("cart", getCartQuantity(req));
+        params.put("cartquantity", getCartQuantity(req));
         return new ModelAndView(params, "product/index");
     }
 
@@ -55,7 +52,7 @@ public class ProductController {
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("categories", productCategoryDataStore.getAll());
         params.put("products", productSupplierDataStore.find(supplierId).getProducts());
-        params.put("cart", getCartQuantity(req));
+        params.put("cartquantity", getCartQuantity(req));
         return new ModelAndView(params, "product/index");
     }
 
@@ -66,16 +63,17 @@ public class ProductController {
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productDataStore.getAll());
-        params.put("cart", getCartQuantity(req));
+        params.put("cartquantity", getCartQuantity(req));
         return new ModelAndView(params, "product/index");
     }
 
-    public static ModelAndView renderCart(Request req, Response res){
+    public static ModelAndView renderCart(Request req,Response res){
         Map params = new HashMap<>();
+
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
-        params.put("products", productDataStore.getAll());
-        params.put("cart", getCartQuantity(req));
+        params.put("cartp",req.session().attribute("cart"));
+        params.put("cartquantity", getCartQuantity(req));
         return new ModelAndView(params, "product/shoppingcart");
     }
 

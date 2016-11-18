@@ -1,12 +1,15 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.model.LineItem;
+
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartImpl implements Cart {
     private List<LineItem> lineItems;
     private int totalQuantity;
-    private int totalPrice;
+    private float totalPrice;
 
 
     public CartImpl() {
@@ -41,4 +44,16 @@ public class CartImpl implements Cart {
         }
         return  this.totalQuantity;
     }
+
+    public List<LineItem> getLineItems() {
+        return lineItems;
+    }
+
+    public float totalPrice() {
+        for (LineItem p : lineItems) {
+            totalPrice += p.getFullPrice();
+        }
+        return totalPrice;
+    }
+
 }
