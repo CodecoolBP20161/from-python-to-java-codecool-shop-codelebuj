@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<body>
+
+<div th:fragment="button">
+    <div class="dropdown dropdown_category">
+        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Category
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="/">All Products</a></li>
+            <li th:each="category : ${categories}"
+                th:value="${category.name}">
+                <a th:text="${category.name}" th:attr="href='/category/' + ${category.id}"></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="dropdown dropdown_supplier">
+        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Supplier
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="/">All Suppliers</a></li>
+            <li th:each="supplier : ${suppliers}"
+                th:value="${supplier.name}">
+                <a th:text="${supplier.name}" th:attr="href='/supplier/' + ${supplier.id}"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+</body>
+</html>

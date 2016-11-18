@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="navbar">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Codecool Shop</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <ul th:replace="button :: button">
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <!--Cart replace-->
+                    <a th:href="'/shoppingcart'" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span><span th:text="${cartquantity}">number</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+</body>
+</html>
