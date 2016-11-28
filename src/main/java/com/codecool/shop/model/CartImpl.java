@@ -1,48 +1,38 @@
 package com.codecool.shop.model;
 
-import com.codecool.shop.model.LineItem;
-
-import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartImpl implements Cart {
-    private List<LineItem> lineItems;
+    private ArrayList<LineItem> lineItems = new ArrayList<>();
     private int totalQuantity;
     private float totalPrice;
 
 
     public CartImpl() {
-        lineItems = new ArrayList<>();
     }
 
     @Override
     public void addProduct(Product product) {
-        if (lineItems.size() == 0) {
-            lineItems.add(new LineItem(product, 1));
+        boolean isIn = false;
+        for (LineItem item : lineItems) {
+            if (item.getProduct().getId() == product.getId()) {
+                item.increaseQuantity(1);
+                isIn = true;
+            }
         }
-        else {
-            boolean isIn = false;
-            for (LineItem item : lineItems) {
-                if (item.getProduct() == product) {
-                    item.increaseQuantity(1);
-                    isIn = true;
-                    break;
-                }
-            }
-            if (isIn == false) {
-                lineItems.add(new LineItem(product,1));
-            }
+        if (isIn == false) {
+            lineItems.add(new LineItem(product, 1));
         }
     }
 
     @Override
     public int getTotalQuantity() {
         this.totalQuantity = 0;
-        for (LineItem item : this.lineItems){
+        for (LineItem item : lineItems) {
             this.totalQuantity += item.getQuantity();
         }
-        return  this.totalQuantity;
+        return this.totalQuantity;
     }
 
     public List<LineItem> getLineItems() {
@@ -50,8 +40,9 @@ public class CartImpl implements Cart {
     }
 
     public float totalPrice() {
-        for (LineItem p : lineItems) {
-            totalPrice += p.getFullPrice();
+        float totalPrice = 0;
+        for (LineItem item : lineItems) {
+            totalPrice += item.getQuantity() * item.getProduct().getDefaultPrice();
         }
         return totalPrice;
     }
