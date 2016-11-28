@@ -13,7 +13,6 @@ import spark.Response;
 import spark.ModelAndView;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ProductController {
@@ -25,56 +24,56 @@ public class ProductController {
     public static int getCartQuantity(Request req) {
         int totalQuantity = 0;
         Cart c = req.session().attribute("cart");
-        if ( c != null ) {
+        if (c != null) {
             totalQuantity = c.getTotalQuantity();
         }
         return totalQuantity;
     }
 
-
-    public static ModelAndView renderProductsByCategory(Request req, Response res){
-        int categoryId = Integer.parseInt(req.params(":category_id"));
-
-        Map params = new HashMap<>();
-        params.put("mainLabel", productCategoryDataStore.find(categoryId).getName());
+    public static Map renderParams(Request req, Response res) {
+        Map params = new HashMap();
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
-        params.put("products", productCategoryDataStore.find(categoryId).getProducts());
         params.put("cartquantity", getCartQuantity(req));
+        return params;
+    }
+
+    public static ModelAndView renderProductsByCategory(Request req, Response res) {
+        int categoryId = Integer.parseInt(req.params(":category_id"));
+        Map params = renderParams(req, res);
+        params.put("mainLabel", productCategoryDataStore.find(categoryId).getName());
+        params.put("products", productCategoryDataStore.find(categoryId).getProducts());
         return new ModelAndView(params, "product/index");
     }
 
-    public static ModelAndView renderProductsBySupplier(Request req, Response res){
+    public static ModelAndView renderProductsBySupplier(Request req, Response res) {
         int supplierId = Integer.parseInt(req.params(":supplier_id"));
-
-        Map params = new HashMap<>();
+        Map params = renderParams(req, res);
         params.put("mainLabel", productSupplierDataStore.find(supplierId).getName());
-        params.put("suppliers", productSupplierDataStore.getAll());
-        params.put("categories", productCategoryDataStore.getAll());
         params.put("products", productSupplierDataStore.find(supplierId).getProducts());
-        params.put("cartquantity", getCartQuantity(req));
         return new ModelAndView(params, "product/index");
     }
 
     public static ModelAndView renderAllProducts(Request req, Response res) {
-
-        Map params = new HashMap<>();
+        Map params = renderParams(req, res);
         params.put("mainLabel", "All Products");
-        params.put("categories", productCategoryDataStore.getAll());
-        params.put("suppliers", productSupplierDataStore.getAll());
         params.put("products", productDataStore.getAll());
-        params.put("cartquantity", getCartQuantity(req));
         return new ModelAndView(params, "product/index");
     }
 
-    public static ModelAndView renderCart(Request req,Response res){
-        Map params = new HashMap<>();
+    public static ModelAndView renderCart(Request req, Response res) {
 
-        params.put("categories", productCategoryDataStore.getAll());
-        params.put("suppliers", productSupplierDataStore.getAll());
-        params.put("cartp",req.session().attribute("cart"));
-        params.put("cartquantity", getCartQuantity(req));
-        return new ModelAndView(params, "product/shoppingcart");
+        Map params = renderParams(req, res);
+        if (req.session().attribute("cart") == null) {
+            Cart cart = new CartImpl();
+            params.put("cartp", cart);
+            return new ModelAndView(params, "product/shoppingcart");
+        } else {
+            params.put("cartp", req.session().attribute("cart"));
+
+            return new ModelAndView(params, "product/shoppingcart");
+        }
+
     }
 
 }
