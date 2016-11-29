@@ -63,9 +63,6 @@ public class BaseModel {
         return sb.toString();
     }
 
-    /**
-     * Created by kakacsu on 2016.11.16..
-     */
     public static class LineItem {
         private Product product;
         private int quantity;
