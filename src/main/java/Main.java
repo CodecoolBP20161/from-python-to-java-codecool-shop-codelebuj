@@ -80,6 +80,12 @@ public class Main {
         productDataStore.add(new Product("Aspire R 14", 800f, "USD", "Cutting-edge graphics and top performance for the ultimate entertainment experience.", notebook, acer));
 
         productDataStore.add(new Product("Canon 5D Mark IV", 500f, "USD", "The EOS 5D Mark IV camera builds on the powerful legacy of the 5D series, offering amazing refinements in image quality, performance and versatility.", camera, canon));
+
+        ProductCategoryDaoJdbc x = new ProductCategoryDaoJdbc();
+        System.out.println(x.getAll());
+        System.out.println(x.find(3));
+        x.remove(2);
+        System.out.println(x.getAll());
     }
 
 

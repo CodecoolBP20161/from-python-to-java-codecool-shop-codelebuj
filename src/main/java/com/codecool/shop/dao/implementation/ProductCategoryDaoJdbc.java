@@ -3,10 +3,8 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,17 +49,64 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
     @Override
     public ProductCategory find(int id) {
-        return null;
+        String query = "SELECT * FROM productcategory WHERE productcategory_id = "+ id+ ";";
+        ProductCategory found = null;
+        try {Connection connection = getConnection();
+            Statement stmt = connection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            if (resultSet.next()) {
+                found = new ProductCategory(resultSet.getInt("productcategory_id"),
+                        resultSet.getString("productcategory_name"),
+                        resultSet.getString("productcategory_description"),
+                        resultSet.getString("productcategory_department"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return found;
     }
 
     @Override
     public void remove(int id) {
-
+        String query = String.format("DELETE FROM productcategory WHERE productcategory_id = %d;", id);
+        executeQuery(query);
     }
 
     @Override
     public List<ProductCategory> getAll() {
-        return null;
+        String query = "SELECT * FROM productcategory;";
+
+        List<ProductCategory> resultList = new ArrayList<>();
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            while (resultSet.next()){
+                ProductCategory actTodo = new ProductCategory(resultSet.getInt("productcategory_id"),
+                        resultSet.getString("productcategory_name"),
+                        resultSet.getString("productcategory_description"),
+                        resultSet.getString("productcategory_department"));
+                resultList.add(actTodo);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
     }
 
+    private void executeQuery(String query) {
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+        ){
+            statement.execute(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

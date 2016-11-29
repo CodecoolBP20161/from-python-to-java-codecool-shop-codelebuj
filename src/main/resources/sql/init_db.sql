@@ -1,6 +1,6 @@
+DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS productCategory;
 DROP TABLE IF EXISTS supplier;
-DROP TABLE IF EXISTS product;
 
 CREATE TABLE productCategory
 (
@@ -24,7 +24,7 @@ product_name VARCHAR (40),
 product_description VARCHAR (150),
 product_defaultPrice FLOAT (20),
 product_defaultCurrency VARCHAR (3),
-product_supplier INT REFERENCES supplier(supplier_id),
-product_productCategory INT REFERENCES productcategory(productcategory_id)
+product_supplier INT REFERENCES supplier(supplier_id) on delete cascade on update cascade,
+product_productCategory INT REFERENCES productcategory(productcategory_id) on delete cascade on update cascade
 );
 
