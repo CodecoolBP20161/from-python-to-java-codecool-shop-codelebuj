@@ -12,7 +12,7 @@ public class ProductDaoJdbcImpl implements ProductDao{
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "alma";
+    private static final String DB_PASSWORD = "Sz28Lor6666";
 
 
     @Override
@@ -30,6 +30,9 @@ public class ProductDaoJdbcImpl implements ProductDao{
 
     @Override
     public void remove(int id) {
+
+        String query = "DELETE FROM product WHERE product_id = '" + id +"';";
+        executeQuery(query);
 
     }
 
