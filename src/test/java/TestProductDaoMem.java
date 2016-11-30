@@ -66,6 +66,13 @@ public class TestProductDaoMem {
     }
 
 
+    @Test
+    public void removeTest(){
+        productDataStore.remove(product3.getId());
+        assertNull(productDataStore.find(3));
+    }
+
+
 
 
     @After
