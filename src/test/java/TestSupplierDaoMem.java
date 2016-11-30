@@ -43,6 +43,14 @@ public class TestSupplierDaoMem {
         assertNull(supplierDataStore.find(3));
     }
 
+    @Test
+    public void getAllTest(){
+        List<Supplier> allSupplier;
+        allSupplier = asList(supplier1, supplier2, supplier3);
+        assertEquals(allSupplier, supplierDataStore.getAll());
+
+    }
+
 
     @After
     public void tearDown() {
