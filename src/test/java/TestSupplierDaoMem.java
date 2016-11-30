@@ -29,6 +29,12 @@ public class TestSupplierDaoMem {
         supplierDataStore.add(supplier3);
     }
 
+    @Test
+    public void addFindTest(){
+        int supplierId = supplier2.getId();
+        supplierDataStore.find(supplierId);
+        assertEquals(2, supplierId);
+    }
 
 
 
