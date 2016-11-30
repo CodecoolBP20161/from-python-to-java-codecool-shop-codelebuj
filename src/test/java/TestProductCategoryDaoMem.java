@@ -38,6 +38,12 @@ public class TestProductCategoryDaoMem {
     }
 
 
+    @Test
+    public void removeTest(){
+        productCategoryDataStore.remove(productCategory3.getId());
+        assertNull(productCategoryDataStore.find(3));
+    }
+
 
     @After
     public void tearDown() {
