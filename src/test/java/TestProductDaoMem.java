@@ -73,6 +73,14 @@ public class TestProductDaoMem {
     }
 
 
+    @Test
+    public void getAllTest(){
+        List<Product> allProduct;
+        allProduct = asList(product1, product2, product3);
+        assertEquals(allProduct, productDataStore.getAll());
+
+    }
+
 
 
     @After
