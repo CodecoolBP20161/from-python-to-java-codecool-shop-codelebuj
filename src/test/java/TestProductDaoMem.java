@@ -57,5 +57,20 @@ public class TestProductDaoMem {
 
     }
 
+    @After
+    public void tearDown() {
+        supplierDataStore.remove(lenovo.getId());
+        supplierDataStore.remove(amazon.getId());
+        productCategoryDataStore.remove(notebook.getId());
+        productCategoryDataStore.remove(tablet.getId());
+        productDataStore.remove(product1.getId());
+        productDataStore.remove(product2.getId());
+        productDataStore.remove(product3.getId());
+
+    }
+
+
+
+
 
 }
