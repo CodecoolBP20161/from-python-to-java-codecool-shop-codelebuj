@@ -16,7 +16,7 @@ public class SupplierDaoJdbc implements SupplierDao {
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/postgres";
     private static final String DB_USER = "postgres";
     private static final String DB_PASSWORD = "postgres";
-    private static ProductCategoryDaoJdbc instance = null;
+    private static SupplierDaoJdbc instance = null;
 
 
     private Connection getConnection() throws SQLException {
@@ -26,9 +26,9 @@ public class SupplierDaoJdbc implements SupplierDao {
                 DB_PASSWORD);
     }
 
-    public static ProductCategoryDaoJdbc getInstance() {
+    public static SupplierDaoJdbc getInstance() {
         if (instance == null) {
-            instance = new ProductCategoryDaoJdbc();
+            instance = new SupplierDaoJdbc();
         }
         return instance;
     }
