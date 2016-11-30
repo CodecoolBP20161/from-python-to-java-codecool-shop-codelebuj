@@ -7,13 +7,14 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 public class ProductDaoJdbcImpl implements ProductDao{
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "postgres";
+    private static final String DB_PASSWORD = "alma";
     private static ProductDaoJdbcImpl instance = null;
 
 
@@ -82,8 +83,8 @@ public class ProductDaoJdbcImpl implements ProductDao{
                                 resultSet.getInt("product_id"),
                                 resultSet.getString("product_name"),
                                 resultSet.getFloat("product_defaultprice"),
-                                resultSet.getString("product_description"),
                                 resultSet.getString("product_defaultcurrency"),
+                                resultSet.getString("product_description"),
                                 cat.find(resultSet.getInt("product_productcategory")),
                                 sup.find(resultSet.getInt("product_supplier")));
                 resultList.add(actTodo);
