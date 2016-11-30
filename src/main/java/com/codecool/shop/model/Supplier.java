@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class Supplier extends BaseModel {
-    private ArrayList<Product> products;
+    private List<Product> products;
 
     public Supplier(String name, String description) {
         super(name);
@@ -19,11 +19,11 @@ public class Supplier extends BaseModel {
         this.products = new ArrayList<>();
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
-    public ArrayList getProducts() {
+    public List getProducts() {
         return this.products;
     }
 

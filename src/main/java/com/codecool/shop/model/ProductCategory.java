@@ -1,10 +1,11 @@
 package com.codecool.shop.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductCategory extends BaseModel {
     private String department;
-    private ArrayList<Product> products;
+    private List<Product> products;
 
     public ProductCategory(Integer id, String name, String department, String description) {
         this(name, department, description);
@@ -25,11 +26,11 @@ public class ProductCategory extends BaseModel {
         this.department = department;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
-    public ArrayList getProducts() {
+    public List getProducts() {
         return this.products;
     }
 

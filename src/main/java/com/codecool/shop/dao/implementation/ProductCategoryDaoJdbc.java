@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "postgres";
+    private static final String DB_PASSWORD = "alma";
     private static ProductCategoryDaoJdbc instance = null;
 
 
@@ -34,9 +34,9 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
     @Override
     public void add(ProductCategory category) {
-        try {
-            String query = "INSERT INTO productcategory (productcategory_name, productcategory_description, productcategory_department) VALUES (?,?,?)";
-            PreparedStatement safeInput = getConnection().prepareStatement(query);
+        String query = "INSERT INTO productcategory (productcategory_name, productcategory_description, productcategory_department) VALUES (?,?,?)";
+
+        try (Connection connection = getConnection(); PreparedStatement safeInput = connection.prepareStatement(query)){
             safeInput.setString(1,category.getName());
             safeInput.setString(2, category.getDescription());
             safeInput.setString(3,category.getDepartment());
@@ -45,6 +45,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -56,10 +57,12 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             ResultSet resultSet = stmt.executeQuery(query);
 
             if (resultSet.next()) {
+                ProductDaoJdbcImpl productDaoJdbc = new ProductDaoJdbcImpl();
                 found = new ProductCategory(resultSet.getInt("productcategory_id"),
                         resultSet.getString("productcategory_name"),
                         resultSet.getString("productcategory_description"),
                         resultSet.getString("productcategory_department"));
+                found.setProducts(productDaoJdbc.getBy(found));
             }
 
         } catch (SQLException e) {

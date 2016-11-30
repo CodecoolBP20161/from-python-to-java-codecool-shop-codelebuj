@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
@@ -13,9 +14,9 @@ import java.util.List;
  */
 public class SupplierDaoJdbc implements SupplierDao {
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "postgres";
+    private static final String DB_PASSWORD = "alma";
     private static SupplierDaoJdbc instance = null;
 
 
@@ -67,9 +68,12 @@ public class SupplierDaoJdbc implements SupplierDao {
             ResultSet resultSet = stmt.executeQuery(query);
 
             if (resultSet.next()) {
+                ProductDaoJdbcImpl productDaoJdbc = new ProductDaoJdbcImpl();
                 found = new Supplier(resultSet.getInt("supplier_id"),
                         resultSet.getString("supplier_name"),
                         resultSet.getString("supplier_description"));
+
+                found.setProducts(productDaoJdbc.getBy(found));
             }
 
         } catch (SQLException e) {

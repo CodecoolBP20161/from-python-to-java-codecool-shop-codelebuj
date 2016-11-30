@@ -34,23 +34,30 @@ public class ProductDaoJdbcImpl implements ProductDao{
 
     @Override
     public Product find(int id) {
-        String query = "SELECT * FROM product WHERE product_id = "+ id+ ";";
+        String query = "select * from product inner join productcategory on product.product_productcategory = productcategory.productcategory_id inner join supplier on product.product_supplier = supplier.supplier_id WHERE product_id = "+ id+ ";";
         Product found = null;
-        ProductCategoryDaoJdbc cat = new ProductCategoryDaoJdbc();
-        SupplierDaoJdbc sup = new SupplierDaoJdbc();
         try {Connection connection = getConnection();
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(query);
 
             if (resultSet.next()) {
+                ProductCategory productCategory= new ProductCategory(
+                        resultSet.getInt("productcategory_id"),
+                        resultSet.getString("productcategory_name"),
+                        resultSet.getString("productcategory_department"),
+                        resultSet.getString("productcategory_description"));
+                Supplier supplier = new Supplier(
+                        resultSet.getInt("supplier_id"),
+                        resultSet.getString("supplier_name"),
+                        resultSet.getString("supplier_description"));
+
                 found = new Product(
                         resultSet.getInt("product_id"),
                         resultSet.getString("product_name"),
                         resultSet.getFloat("product_defaultprice"),
                         resultSet.getString("product_defaultcurrency"),
                         resultSet.getString("product_description"),
-                        cat.find(resultSet.getInt("product_productcategory")),
-                        sup.find(resultSet.getInt("product_supplier")));
+                        productCategory, supplier);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,25 +75,32 @@ public class ProductDaoJdbcImpl implements ProductDao{
 
     @Override
     public List<Product> getAll() {
-        String query = "SELECT * FROM product;";
+        String query = "select * from product inner join productcategory on product.product_productcategory = productcategory.productcategory_id inner join supplier on product.product_supplier = supplier.supplier_id;";
         List<Product> resultList = new ArrayList<>();
 
-        ProductCategoryDaoJdbc cat = new ProductCategoryDaoJdbc();
-        SupplierDaoJdbc sup = new SupplierDaoJdbc();
+
 
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
+                ProductCategory productCategory= new ProductCategory(
+                        resultSet.getInt("productcategory_id"),
+                        resultSet.getString("productcategory_name"),
+                        resultSet.getString("productcategory_department"),
+                        resultSet.getString("productcategory_description"));
+                Supplier supplier = new Supplier(
+                        resultSet.getInt("supplier_id"),
+                        resultSet.getString("supplier_name"),
+                        resultSet.getString("supplier_description"));
                 Product actTodo = new Product(
                                 resultSet.getInt("product_id"),
                                 resultSet.getString("product_name"),
                                 resultSet.getFloat("product_defaultprice"),
                                 resultSet.getString("product_defaultcurrency"),
                                 resultSet.getString("product_description"),
-                                cat.find(resultSet.getInt("product_productcategory")),
-                                sup.find(resultSet.getInt("product_supplier")));
+                                productCategory, supplier);
                 resultList.add(actTodo);
             }
 
@@ -99,12 +113,8 @@ public class ProductDaoJdbcImpl implements ProductDao{
 
     @Override
     public List<Product> getBy(Supplier supplier) {
-        ProductCategoryDaoJdbc cat = new ProductCategoryDaoJdbc();
-        SupplierDaoJdbc sup = new SupplierDaoJdbc();
-
-        String query = String.format("SELECT * FROM product where product_supplier = %d", supplier.getId());
+        String query = String.format("select * from product inner join productcategory on product.product_productcategory = productcategory.productcategory_id inner join supplier on product.product_supplier = supplier.supplier_id where product_supplier = %d;", supplier.getId());
         List<Product> productsBySupp = new ArrayList<Product>();
-        Product target;
 
         try {
             Connection connection = getConnection();
@@ -112,14 +122,22 @@ public class ProductDaoJdbcImpl implements ProductDao{
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
-                target = new Product(
+                ProductCategory productCategory= new ProductCategory(
+                        resultSet.getInt("productcategory_id"),
+                        resultSet.getString("productcategory_name"),
+                        resultSet.getString("productcategory_department"),
+                        resultSet.getString("productcategory_description"));
+                Supplier supp = new Supplier(
+                        resultSet.getInt("supplier_id"),
+                        resultSet.getString("supplier_name"),
+                        resultSet.getString("supplier_description"));
+                Product target = new Product(
                         resultSet.getInt("product_id"),
                         resultSet.getString("product_name"),
                         resultSet.getFloat("product_defaultprice"),
-                        resultSet.getString("product_description"),
                         resultSet.getString("product_defaultcurrency"),
-                        cat.find(resultSet.getInt("product_productcategory")),
-                        sup.find(resultSet.getInt("product_supplier")));
+                        resultSet.getString("product_description"),
+                        productCategory, supp);
                 productsBySupp.add(target);
             }
 
@@ -131,12 +149,9 @@ public class ProductDaoJdbcImpl implements ProductDao{
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
-        ProductCategoryDaoJdbc cat = new ProductCategoryDaoJdbc();
-        SupplierDaoJdbc sup = new SupplierDaoJdbc();
-
-        String query = String.format("SELECT * FROM product where product_productcategory = %d", productCategory.getId());
+        String query = String.format("select * from product inner join productcategory on product.product_productcategory = productcategory.productcategory_id inner join supplier on product.product_supplier = supplier.supplier_id  where product_productcategory = %d;", productCategory.getId());
         List<Product> productsByCat = new ArrayList<Product>();
-        Product target;
+
 
         try {
             Connection connection = getConnection();
@@ -144,20 +159,29 @@ public class ProductDaoJdbcImpl implements ProductDao{
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
-                target = new Product(
+                ProductCategory productCat= new ProductCategory(
+                        resultSet.getInt("productcategory_id"),
+                        resultSet.getString("productcategory_name"),
+                        resultSet.getString("productcategory_department"),
+                        resultSet.getString("productcategory_description"));
+                Supplier supplier = new Supplier(
+                        resultSet.getInt("supplier_id"),
+                        resultSet.getString("supplier_name"),
+                        resultSet.getString("supplier_description"));
+                Product target = new Product(
                         resultSet.getInt("product_id"),
                         resultSet.getString("product_name"),
                         resultSet.getFloat("product_defaultprice"),
-                        resultSet.getString("product_description"),
                         resultSet.getString("product_defaultcurrency"),
-                        cat.find(resultSet.getInt("product_productcategory")),
-                        sup.find(resultSet.getInt("product_supplier")));
+                        resultSet.getString("product_description"),
+                        productCat, supplier);
                 productsByCat.add(target);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return productsByCat;
     }
 
