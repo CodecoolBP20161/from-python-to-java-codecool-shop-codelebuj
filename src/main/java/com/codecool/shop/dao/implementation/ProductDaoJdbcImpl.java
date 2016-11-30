@@ -7,17 +7,21 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
-public class ProductDaoJdbcImpl implements ProductDao{
+public class ProductDaoJdbcImpl extends ConnectionDb implements ProductDao {
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "alma";
+    @Override
+    public Connection getConnection() throws SQLException {
+        return super.getConnection();
+    }
+
+    @Override
+    public void executeQuery(String query) {
+        super.executeQuery(query);
+    }
+
     private static ProductDaoJdbcImpl instance = null;
-
-
     public static ProductDaoJdbcImpl getInstance() {
         if (instance == null) {
             instance = new ProductDaoJdbcImpl();
@@ -77,8 +81,6 @@ public class ProductDaoJdbcImpl implements ProductDao{
     public List<Product> getAll() {
         String query = "select * from product inner join productcategory on product.product_productcategory = productcategory.productcategory_id inner join supplier on product.product_supplier = supplier.supplier_id;";
         List<Product> resultList = new ArrayList<>();
-
-
 
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
@@ -183,24 +185,5 @@ public class ProductDaoJdbcImpl implements ProductDao{
         }
 
         return productsByCat;
-    }
-
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                DATABASE,
-                DB_USER,
-                DB_PASSWORD);
-    }
-
-    private void executeQuery(String query) {
-        try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
-        ) {
-            statement.execute(query);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

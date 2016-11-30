@@ -1,48 +1,32 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by levente on 2016.11.29..
- */
-public class SupplierDaoJdbc implements SupplierDao {
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "alma";
-    private static SupplierDaoJdbc instance = null;
+public class SupplierDaoJdbc extends ConnectionDb implements SupplierDao {
 
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                DATABASE,
-                DB_USER,
-                DB_PASSWORD);
+    @Override
+    public Connection getConnection() throws SQLException {
+        return super.getConnection();
     }
+
+    @Override
+    public void executeQuery(String query) {
+        super.executeQuery(query);
+    }
+
+    private static SupplierDaoJdbc instance = null;
 
     public static SupplierDaoJdbc getInstance() {
         if (instance == null) {
             instance = new SupplierDaoJdbc();
         }
         return instance;
-    }
-
-    private void executeQuery(String query) {
-        try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-        ){
-            statement.execute(query);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -95,7 +79,7 @@ public class SupplierDaoJdbc implements SupplierDao {
 
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
+             ResultSet resultSet = statement.executeQuery(query)
         ){
             while (resultSet.next()){
                 Supplier actTodo = new Supplier(resultSet.getInt("supplier_id"),
@@ -103,8 +87,6 @@ public class SupplierDaoJdbc implements SupplierDao {
                         resultSet.getString("supplier_description"));
                 resultList.add(actTodo);
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

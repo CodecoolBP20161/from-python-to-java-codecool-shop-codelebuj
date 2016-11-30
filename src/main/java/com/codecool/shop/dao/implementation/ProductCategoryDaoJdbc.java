@@ -7,23 +7,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by levente on 2016.11.29..
- */
-public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "alma";
-    private static ProductCategoryDaoJdbc instance = null;
+public class ProductCategoryDaoJdbc extends ConnectionDb implements ProductCategoryDao {
 
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                DATABASE,
-                DB_USER,
-                DB_PASSWORD);
+    @Override
+    public Connection getConnection() throws SQLException {
+        return super.getConnection();
     }
+
+    @Override
+    public void executeQuery(String query) {
+        super.executeQuery(query);
+    }
+
+    private static ProductCategoryDaoJdbc instance = null;
 
     public static ProductCategoryDaoJdbc getInstance() {
         if (instance == null) {
@@ -100,16 +97,5 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             e.printStackTrace();
         }
         return resultList;
-    }
-
-    private void executeQuery(String query) {
-        try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-        ){
-            statement.execute(query);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
