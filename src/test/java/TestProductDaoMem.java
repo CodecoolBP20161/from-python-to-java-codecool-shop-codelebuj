@@ -57,6 +57,17 @@ public class TestProductDaoMem {
 
     }
 
+    @Test
+    public void addFindTest(){
+        int productId = product2.getId();
+        productDataStore.find(productId);
+
+        assertEquals(2, productId);
+    }
+
+
+
+
     @After
     public void tearDown() {
         supplierDataStore.remove(lenovo.getId());
