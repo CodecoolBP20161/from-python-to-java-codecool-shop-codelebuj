@@ -89,6 +89,13 @@ public class TestProductDaoMem {
 
     }
 
+    @Test
+    public void getByProductCategoryTest(){
+        List<Product> allProductByProductCategory;
+        allProductByProductCategory = asList(product2);
+        assertEquals(allProductByProductCategory, productDataStore.getBy(lenovo));
+
+    }
 
 
     @After
