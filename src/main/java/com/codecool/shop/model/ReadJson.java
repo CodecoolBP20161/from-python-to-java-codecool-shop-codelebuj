@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,36 +13,21 @@ import org.json.simple.parser.ParseException;
 public class ReadJson {
 
 
-    public static ArrayList<String> readJsonFromFile() {
-
+    public static HashMap<String ,String> readJsonFromFile() {
         JSONParser parser = new JSONParser();
-
-        ArrayList<String> databaseInfo = null;
-
+        HashMap<String,String> databaseInfo = new HashMap();
         try {
-
             Object obj = parser.parse(new FileReader("login.json"));
-
             JSONObject jsonObject = (JSONObject) obj;
-
             String url = (String) jsonObject.get("url");
-            //System.out.println(url);
-
             String database = (String) jsonObject.get("database");
-            //System.out.println(database);
-
             String user = (String) jsonObject.get("user");
-            //System.out.println(user);
-
             String password = (String) jsonObject.get("password");
-            //System.out.println(password);
 
-            databaseInfo.add(url);
-            databaseInfo.add(database);
-            databaseInfo.add(user);
-            databaseInfo.add(password);
-            System.out.println(databaseInfo);
-
+            databaseInfo.put("url",url);
+            databaseInfo.put("database", database);
+            databaseInfo.put("user",user);
+            databaseInfo.put("password", password);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -50,7 +36,6 @@ public class ReadJson {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return databaseInfo;
     }
 
