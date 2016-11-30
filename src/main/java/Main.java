@@ -28,6 +28,8 @@ public class Main {
 
         get("/cart/:product_id", CartController::addToCart, new ThymeleafTemplateEngine());
 
+        post("/add/:product_id", CartController::increaseCartItem, new ThymeleafTemplateEngine());
+
         get("/supplier/:supplier_id", ProductController::renderProductsBySupplier, new ThymeleafTemplateEngine());
 
         get("/shoppingcart", ProductController::renderCart, new ThymeleafTemplateEngine());

@@ -36,4 +36,16 @@ public class CartController {
         return null;
     }
 
+    public static ModelAndView increaseCartItem(Request req, Response res){
+        int productId = Integer.parseInt(req.params(":product_id"));
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        Product product = productDataStore.find(productId);
+        Cart cart = req.session().attribute("cart");
+        cart.addProduct(product);
+        req.session().attribute("cart", cart);
+        res.redirect("/shoppingcart");
+        return null;
+    }
+
+
 }
