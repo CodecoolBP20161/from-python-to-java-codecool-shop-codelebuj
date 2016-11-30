@@ -30,5 +30,20 @@ public class TestProductCategoryDaoMem {
 
     }
 
+    @Test
+    public void addFindTest(){
+        int categoryId = productCategory2.getId();
+        productCategoryDataStore.find(categoryId);
+        assertEquals(2, categoryId);
+    }
+
+
+
+    @After
+    public void tearDown() {
+        productCategoryDataStore.remove(productCategory1.getId());
+        productCategoryDataStore.remove(productCategory2.getId());
+        productCategoryDataStore.remove(productCategory3.getId());
+    }
 
 }
