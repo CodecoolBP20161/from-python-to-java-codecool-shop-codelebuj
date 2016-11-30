@@ -37,6 +37,12 @@ public class TestSupplierDaoMem {
     }
 
 
+    @Test
+    public void removeTest(){
+        supplierDataStore.remove(supplier3.getId());
+        assertNull(supplierDataStore.find(3));
+    }
+
 
     @After
     public void tearDown() {
