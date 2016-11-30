@@ -44,6 +44,14 @@ public class TestProductCategoryDaoMem {
         assertNull(productCategoryDataStore.find(3));
     }
 
+    @Test
+    public void getAllTest(){
+        List<ProductCategory> allProductCategory;
+        allProductCategory = asList(productCategory1,productCategory2,productCategory3);
+        assertEquals(allProductCategory, productCategoryDataStore.getAll());
+
+    }
+
 
     @After
     public void tearDown() {
