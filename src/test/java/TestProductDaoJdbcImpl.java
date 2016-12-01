@@ -1,12 +1,10 @@
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.model.Supplier;
 import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,19 +15,19 @@ import static java.util.Arrays.asList;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNull;
 
-public class TestProductDaoMem {
+public class TestProductDaoJdbcImpl {
 
     private Product product1;
     private Product product2;
     private Product product3;
 
-    SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+    SupplierDao supplierDataStore = SupplierDaoJdbc.getInstance();
     private Supplier lenovo;
     private Supplier amazon;
-    ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
     private ProductCategory tablet;
     private ProductCategory notebook;
-    ProductDao productDataStore = ProductDaoMem.getInstance();
+    ProductDao productDataStore = ProductDaoJdbcImpl.getInstance();
 
 
 
@@ -52,7 +50,7 @@ public class TestProductDaoMem {
         productDataStore.add(product1);
         product2 = new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo);
         productDataStore.add(product2);
-        product3 = new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", notebook, amazon);
+        product3 = new Product("Amazon Fire HD 8", 89, "USD", "Amazons latest Fire HD 8 tablet is a great value for media consumption.", notebook, amazon);
         productDataStore.add(product3);
 
     }
@@ -61,7 +59,7 @@ public class TestProductDaoMem {
     public void addFindTest(){
         int productId = product2.getId();
         Product prod = productDataStore.find(productId);
-        assertEquals(productId,  prod.getId());
+        assertEquals(productId, prod.getId());
     }
 
 
@@ -108,9 +106,6 @@ public class TestProductDaoMem {
         productDataStore.remove(product3.getId());
 
     }
-
-
-
 
 
 }

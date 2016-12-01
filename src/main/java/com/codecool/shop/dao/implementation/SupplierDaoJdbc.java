@@ -2,7 +2,7 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
-
+import com.codecool.shop.util.IdGenerator;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +32,13 @@ public class SupplierDaoJdbc extends ConnectionDb implements SupplierDao {
     @Override
     public void add(Supplier category) {
         try {
-            String query = "INSERT INTO supplier (supplier_name, supplier_description) VALUES (?,?)";
+            int id = IdGenerator.getInstance().getNextId();
+            category.setId(id);
+            String query = "INSERT INTO supplier (supplier_id, supplier_name, supplier_description) VALUES (?,?,?);";
             PreparedStatement safeInput = getConnection().prepareStatement(query);
-            safeInput.setString(1,category.getName());
-            safeInput.setString(2, category.getDescription());
+            safeInput.setInt(1,category.getId());
+            safeInput.setString(2,category.getName());
+            safeInput.setString(3,category.getDescription());
             safeInput.executeUpdate();
         }
         catch (SQLException e) {

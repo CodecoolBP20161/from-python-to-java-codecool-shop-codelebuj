@@ -8,7 +8,7 @@
 target/
 
 login.json
-
+my-app.iml
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

@@ -1,5 +1,5 @@
 import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoJdbc;
 import com.codecool.shop.model.ProductCategory;
 import org.junit.*;
 
@@ -10,13 +10,13 @@ import static java.util.Arrays.*;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class TestProductCategoryDaoMem {
+public class TestProductCategoryDaoJdbc {
 
 
     private ProductCategory productCategory1;
     private ProductCategory productCategory2;
     private ProductCategory productCategory3;
-    ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
 
 
     @Before
@@ -39,17 +39,16 @@ public class TestProductCategoryDaoMem {
 
 
     @Test
-    public void removeTest(){
-        productCategoryDataStore.remove(productCategory3.getId());
-        assertNull(productCategoryDataStore.find(3));
-    }
-
-    @Test
     public void getAllTest(){
         List<ProductCategory> allProductCategory;
         allProductCategory = asList(productCategory1,productCategory2,productCategory3);
-        assertEquals(allProductCategory, productCategoryDataStore.getAll());
+        assertEquals(asList(allProductCategory), asList(productCategoryDataStore.getAll()));
+    }
 
+    @Test
+    public void removeTest(){
+        productCategoryDataStore.remove(productCategory3.getId());
+        assertNull(productCategoryDataStore.find(3));
     }
 
 

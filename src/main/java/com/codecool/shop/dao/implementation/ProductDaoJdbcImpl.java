@@ -5,6 +5,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import com.codecool.shop.util.IdGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,11 @@ public class ProductDaoJdbcImpl extends ConnectionDb implements ProductDao {
 
     @Override
     public void add(Product product) {
-        String query = "INSERT INTO product (product_name, product_description, product_defaultPrice, product_defaultCurrency, product_supplier, product_productCategory) " +
-                "VALUES ('" + product.getName() + "','" + product.getDescription() +"', "+product.getDefaultPrice()+",'" + product.getDefaultCurrency()+"'," +product.getProductCategory().getId()+","+product.getProductCategory().getId()+");";
+        int id = IdGenerator.getInstance().getNextId();
+        product.setId(id);
+
+        String query = "INSERT INTO product (product_id, product_name, product_description, product_defaultPrice, product_defaultCurrency, product_supplier, product_productCategory) " +
+                "VALUES ('" + product.getId() + "','" + product.getName() + "','" + product.getDescription() +"', "+product.getDefaultPrice()+",'" + product.getDefaultCurrency()+"'," +product.getSupplier().getId()+","+product.getProductCategory().getId()+");";
         executeQuery(query);
     }
 

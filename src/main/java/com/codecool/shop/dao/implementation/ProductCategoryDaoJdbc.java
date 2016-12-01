@@ -2,6 +2,7 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.util.IdGenerator;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,12 +32,16 @@ public class ProductCategoryDaoJdbc extends ConnectionDb implements ProductCateg
 
     @Override
     public void add(ProductCategory category) {
-        String query = "INSERT INTO productcategory (productcategory_name, productcategory_description, productcategory_department) VALUES (?,?,?)";
+        int id = IdGenerator.getInstance().getNextId();
+        category.setId(id);
+
+        String query = "INSERT INTO productcategory (productcategory_id, productcategory_name, productcategory_description, productcategory_department) VALUES (?,?,?,?)";
 
         try (Connection connection = getConnection(); PreparedStatement safeInput = connection.prepareStatement(query)){
-            safeInput.setString(1,category.getName());
-            safeInput.setString(2, category.getDescription());
-            safeInput.setString(3,category.getDepartment());
+            safeInput.setInt(1, category.getId());
+            safeInput.setString(2,category.getName());
+            safeInput.setString(3, category.getDescription());
+            safeInput.setString(4,category.getDepartment());
             safeInput.executeUpdate();
         }
         catch (SQLException e) {
@@ -57,8 +62,8 @@ public class ProductCategoryDaoJdbc extends ConnectionDb implements ProductCateg
                 ProductDaoJdbcImpl productDaoJdbc = new ProductDaoJdbcImpl();
                 found = new ProductCategory(resultSet.getInt("productcategory_id"),
                         resultSet.getString("productcategory_name"),
-                        resultSet.getString("productcategory_description"),
-                        resultSet.getString("productcategory_department"));
+                        resultSet.getString("productcategory_department"),
+                        resultSet.getString("productcategory_description"));
                 found.setProducts(productDaoJdbc.getBy(found));
             }
 
@@ -87,8 +92,8 @@ public class ProductCategoryDaoJdbc extends ConnectionDb implements ProductCateg
             while (resultSet.next()){
                 ProductCategory actTodo = new ProductCategory(resultSet.getInt("productcategory_id"),
                         resultSet.getString("productcategory_name"),
-                        resultSet.getString("productcategory_description"),
-                        resultSet.getString("productcategory_department"));
+                        resultSet.getString("productcategory_department"),
+                        resultSet.getString("productcategory_description"));
                 resultList.add(actTodo);
             }
 

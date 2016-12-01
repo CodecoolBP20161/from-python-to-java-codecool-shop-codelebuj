@@ -38,6 +38,21 @@ public class ProductCategory extends BaseModel {
         this.products.add(product);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductCategory that = (ProductCategory) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return department != null ? department.hashCode() : 0;
+    }
+
     public String toString() {
         return String.format(
                 "id: %1$d," +

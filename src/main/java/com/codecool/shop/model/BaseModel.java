@@ -1,6 +1,5 @@
 package com.codecool.shop.model;
 
-
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
