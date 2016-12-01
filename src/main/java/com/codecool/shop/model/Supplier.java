@@ -31,6 +31,16 @@ public class Supplier extends BaseModel {
         this.products.add(product);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Supplier that = (Supplier) o;
+
+        return id == that.id;
+    }
+
     public String toString() {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +

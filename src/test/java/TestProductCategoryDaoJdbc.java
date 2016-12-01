@@ -22,11 +22,11 @@ public class TestProductCategoryDaoJdbc {
 
     @Before
     public void setUp() {
-        productCategory1 = new ProductCategory(1,"Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        productCategory1 = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(productCategory1);
-        productCategory2 = new ProductCategory(2,"Notebook", "Hardware", "A tablet computer, commonly shortened to tablet.");
+        productCategory2 = new ProductCategory("Notebook", "Hardware", "A tablet computer, commonly shortened to tablet.");
         productCategoryDataStore.add(productCategory2);
-        productCategory3 = new ProductCategory(3,"Camera", "Hardware", "A tablet computer, commonly shortened to tablet.");
+        productCategory3 = new ProductCategory("Camera", "Hardware", "A tablet computer, commonly shortened to tablet.");
         productCategoryDataStore.add(productCategory3);
 
     }
