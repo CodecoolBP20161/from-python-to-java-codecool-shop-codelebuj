@@ -1,6 +1,5 @@
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoJdbc;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.model.ProductCategory;
 import org.junit.*;
 
@@ -34,8 +33,8 @@ public class TestProductCategoryDaoJdbc {
     @Test
     public void addFindTest(){
         int categoryId = productCategory2.getId();
-        productCategoryDataStore.find(categoryId);
-        assertEquals(2, categoryId);
+        ProductCategory prodC = productCategoryDataStore.find(categoryId);
+        assertEquals(categoryId, prodC.getId());
     }
 
 

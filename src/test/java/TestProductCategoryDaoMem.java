@@ -33,8 +33,8 @@ public class TestProductCategoryDaoMem {
     @Test
     public void addFindTest(){
         int categoryId = productCategory2.getId();
-        productCategoryDataStore.find(categoryId);
-        assertEquals(2, categoryId);
+        ProductCategory prodC = productCategoryDataStore.find(categoryId);
+        assertEquals(categoryId, prodC.getId());
     }
 
 

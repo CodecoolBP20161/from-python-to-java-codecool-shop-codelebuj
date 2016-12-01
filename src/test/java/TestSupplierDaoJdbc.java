@@ -29,9 +29,9 @@ public class TestSupplierDaoJdbc {
 
     @Test
     public void addFindTest(){
-        int categoryId = supplier2.getId();
-        supplierDataStore.find(categoryId);
-        assertEquals(46, categoryId);
+        int supplierID = supplier2.getId();
+        Supplier sup = supplierDataStore.find(supplierID);
+        assertEquals(supplierID, sup.getId());
     }
 
 

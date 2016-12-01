@@ -58,10 +58,8 @@ public class TestProductDaoJdbcImpl {
     @Test
     public void addFindTest(){
         int productId = product2.getId();
-        productDataStore.find(productId);
-        System.out.println(product2.getId());
-
-        assertEquals(15, productId);
+        Product prod = productDataStore.find(productId);
+        assertEquals(productId, prod.getId());
     }
 
 

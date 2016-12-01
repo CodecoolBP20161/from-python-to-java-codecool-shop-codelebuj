@@ -3,7 +3,6 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.util.IdGenerator;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

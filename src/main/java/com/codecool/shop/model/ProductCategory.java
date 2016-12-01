@@ -38,14 +38,6 @@ public class ProductCategory extends BaseModel {
         this.products.add(product);
     }
 
-//    public boolean equals(ProductCategory obj) {
-//        Boolean result = false;
-//        if (this.id == obj.getId()) {
-//            result = true;
-//        }
-//        return result;
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

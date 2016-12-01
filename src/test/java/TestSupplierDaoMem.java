@@ -32,8 +32,8 @@ public class TestSupplierDaoMem {
     @Test
     public void addFindTest(){
         int supplierId = supplier2.getId();
-        supplierDataStore.find(supplierId);
-        assertEquals(2, supplierId);
+        Supplier sup =supplierDataStore.find(supplierId);
+        assertEquals(supplierId, sup.getId());
     }
 
 

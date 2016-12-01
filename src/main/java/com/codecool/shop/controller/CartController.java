@@ -5,7 +5,6 @@ import com.codecool.shop.dao.implementation.ProductDaoJdbcImpl;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.CartImpl;
 import com.codecool.shop.model.Cart;
-import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Product;
 import spark.Request;
 import spark.Response;
