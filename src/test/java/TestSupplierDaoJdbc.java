@@ -31,7 +31,7 @@ public class TestSupplierDaoJdbc {
     public void addFindTest(){
         int categoryId = supplier2.getId();
         supplierDataStore.find(categoryId);
-        assertEquals(2, categoryId);
+        assertEquals(46, categoryId);
     }
 
 

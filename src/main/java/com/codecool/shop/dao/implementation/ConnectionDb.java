@@ -25,7 +25,7 @@ public abstract class ConnectionDb {
 
     public void executeQuery(String query) {
         try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
+             Statement statement = connection.createStatement()
         ) {
             statement.execute(query);
 

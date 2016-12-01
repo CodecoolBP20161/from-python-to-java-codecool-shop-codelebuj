@@ -35,7 +35,7 @@ public class SupplierDaoJdbc extends ConnectionDb implements SupplierDao {
         try {
             int id = IdGenerator.getInstance().getNextId();
             category.setId(id);
-            String query = "INSERT INTO supplier (supplier_id, supplier_name, supplier_description) VALUES (?,?,?)";
+            String query = "INSERT INTO supplier (supplier_id, supplier_name, supplier_description) VALUES (?,?,?);";
             PreparedStatement safeInput = getConnection().prepareStatement(query);
             safeInput.setInt(1,category.getId());
             safeInput.setString(2,category.getName());

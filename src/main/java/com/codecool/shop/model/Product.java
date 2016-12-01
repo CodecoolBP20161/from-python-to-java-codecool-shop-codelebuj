@@ -66,6 +66,16 @@ public class Product extends BaseModel {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product that = (Product) o;
+
+        return id == that.id;
+    }
+
+    @Override
     public String toString() {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +
