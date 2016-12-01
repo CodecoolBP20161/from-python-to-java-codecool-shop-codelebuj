@@ -19,7 +19,7 @@ public class Main {
         port(8888);
 
         // populate some data for the memory storage
-        populateData();
+        //populateData();
 
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");
@@ -63,6 +63,7 @@ public class Main {
         supplierDataStore.add(acer);
         Supplier canon = new Supplier("Canon", "Camera");
         supplierDataStore.add(canon);
+        Supplier apple = new Supplier("Apple corp.", "Overpriced shit");
 
 
         //setting up a new product category
@@ -84,7 +85,27 @@ public class Main {
         productDataStore.add(new Product("Aspire R 14", 800f, "USD", "Cutting-edge graphics and top performance for the ultimate entertainment experience.", notebook, acer));
 
         productDataStore.add(new Product("Canon 5D Mark IV", 500f, "USD", "The EOS 5D Mark IV camera builds on the powerful legacy of the 5D series, offering amazing refinements in image quality, performance and versatility.", camera, canon));
+        // Category Tests
+//        ProductCategoryDaoJdbc x = new ProductCategoryDaoJdbc();
+//        System.out.println(x.getAll());
+//        System.out.println(x.find(3));
+//        x.remove(2);
+//        System.out.println(x.getAll());
+//        // Supplier tests
+//        SupplierDao supp = new SupplierDaoJdbc();
+//        System.out.println(supp.getAll());
+//        supp.remove(1);
+//        System.out.println("after removed id 1");
+//        System.out.println(supp.getAll());
+//
+//        System.out.println("Finding an element:");
+//        System.out.println(supp.find(2));
+//        System.out.println("\nCheck if inserts new E:");
+//        supp.add(apple);
+//        System.out.println(supp.getAll());
+//
+//        System.out.println("\n-------------\nProduct test");
+//        ProductDao c = new ProductDaoJdbcImpl();
+//        System.out.println(c.find(1));
     }
-
-
 }

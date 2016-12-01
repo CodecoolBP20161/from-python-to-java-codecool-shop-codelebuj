@@ -3,9 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.*;
 
 import spark.Request;
@@ -17,9 +15,9 @@ import java.util.Map;
 
 public class ProductController {
 
-    static private ProductDao productDataStore = ProductDaoMem.getInstance();
-    static private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    static private SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
+    static private ProductDao productDataStore = ProductDaoJdbcImpl.getInstance();
+    static private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
+    static private SupplierDao productSupplierDataStore = SupplierDaoJdbc.getInstance();
 
     public static int getCartQuantity(Request req) {
         int totalQuantity = 0;

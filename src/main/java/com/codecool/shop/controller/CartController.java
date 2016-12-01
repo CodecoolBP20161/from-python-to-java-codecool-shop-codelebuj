@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.ProductDaoJdbcImpl;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.CartImpl;
 import com.codecool.shop.model.Cart;
@@ -23,7 +24,7 @@ public class CartController {
 
     public static ModelAndView addToCart(Request req, Response res){
         int productId = Integer.parseInt(req.params(":product_id"));
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoJdbcImpl.getInstance();
         Product product = productDataStore.find(productId);
         Cart cart = (Cart) req.session().attribute("cart");
 
@@ -39,7 +40,7 @@ public class CartController {
 
     public static ModelAndView increaseCartItem(Request req, Response res){
         int productId = Integer.parseInt(req.params(":product_id"));
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoJdbcImpl.getInstance();
         Product product = productDataStore.find(productId);
         Cart cart = req.session().attribute("cart");
         cart.addProduct(product);
@@ -50,7 +51,7 @@ public class CartController {
 
     public static ModelAndView decreaseCartItem(Request req, Response res){
         int productId = Integer.parseInt(req.params(":product_id"));
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoJdbcImpl.getInstance();
         Product product = productDataStore.find(productId);
         Cart cart = req.session().attribute("cart");
         cart.removeProduct(product);
