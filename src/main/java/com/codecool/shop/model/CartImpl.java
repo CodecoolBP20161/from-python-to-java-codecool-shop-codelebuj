@@ -26,6 +26,18 @@ public class CartImpl implements Cart {
         }
     }
 
+
+    @Override
+    public void removeProduct(Product product){
+        for (LineItem item : lineItems) {
+            if (item.getProduct().getId() == product.getId()) {
+                item.decreaseQuantity(1);
+            }
+        }
+
+    }
+
+
     @Override
     public int getTotalQuantity() {
         this.totalQuantity = 0;

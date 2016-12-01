@@ -4,6 +4,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.CartImpl;
 import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Product;
 import spark.Request;
 import spark.Response;
@@ -43,6 +44,18 @@ public class CartController {
         Cart cart = req.session().attribute("cart");
         cart.addProduct(product);
         req.session().attribute("cart", cart);
+        res.redirect("/shoppingcart");
+        return null;
+    }
+
+    public static ModelAndView decreaseCartItem(Request req, Response res){
+        int productId = Integer.parseInt(req.params(":product_id"));
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        Product product = productDataStore.find(productId);
+        Cart cart = req.session().attribute("cart");
+        cart.removeProduct(product);
+        req.session().attribute("cart", cart);
+
         res.redirect("/shoppingcart");
         return null;
     }

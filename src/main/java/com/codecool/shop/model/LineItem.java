@@ -1,13 +1,12 @@
 package com.codecool.shop.model;
 
-import org.omg.CORBA.Object;
-
-
 
 public class LineItem {
     private Product product;
     private int quantity;
     private float fullPrice;
+
+    public void LineItem(){}
 
     public Product getProduct() {
         return product;
@@ -34,6 +33,12 @@ public class LineItem {
         this.quantity += quantity;
     }
 
+    public void decreaseQuantity(int quantity) {
+        if (this.quantity >= 1) {
+            this.quantity -= quantity;
+
+        }
+    }
 
     public LineItem(Product product, int quantity) {
         this.product = product;
