@@ -19,7 +19,7 @@ public class Main {
         port(8888);
 
         // populate some data for the memory storage
-        populateData();
+        //populateData();
 
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");
