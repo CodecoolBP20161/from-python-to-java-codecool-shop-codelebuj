@@ -15,7 +15,11 @@ public class Product extends BaseModel {
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
+    }
 
+    public Product(Integer id,String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
+        this(name,  defaultPrice, currencyString, description,  productCategory, supplier);
+        this.id = id;
     }
 
     public float getDefaultPrice() {
@@ -30,12 +34,12 @@ public class Product extends BaseModel {
         return defaultCurrency;
     }
 
-    public void setDefaultCurrency(Currency defaultCurrency) {
+    public void setDefaultCurrency() {
         this.defaultCurrency = defaultCurrency;
     }
 
     public String getPrice() {
-        return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
+        return String.valueOf(this.defaultPrice) + " " + String.valueOf(this.defaultCurrency);
     }
 
     public void setPrice(float price, String currency) {
@@ -62,6 +66,16 @@ public class Product extends BaseModel {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product that = (Product) o;
+
+        return id == that.id;
+    }
+
+    @Override
     public String toString() {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +
@@ -72,7 +86,7 @@ public class Product extends BaseModel {
                 this.id,
                 this.name,
                 this.defaultPrice,
-                this.defaultCurrency.toString(),
+                this.defaultCurrency,
                 this.productCategory.getName(),
                 this.supplier.getName());
     }

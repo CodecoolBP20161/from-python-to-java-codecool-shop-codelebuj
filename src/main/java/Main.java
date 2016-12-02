@@ -19,7 +19,7 @@ public class Main {
         port(8888);
 
         // populate some data for the memory storage
-        populateData();
+        //populateData();
 
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");
@@ -28,6 +28,10 @@ public class Main {
 
         get("/cart/:product_id", CartController::addToCart, new ThymeleafTemplateEngine());
 
+        post("/add/:product_id", CartController::increaseCartItem, new ThymeleafTemplateEngine());
+
+        post("/remove/:product_id", CartController::decreaseCartItem, new ThymeleafTemplateEngine());
+
         get("/supplier/:supplier_id", ProductController::renderProductsBySupplier, new ThymeleafTemplateEngine());
 
         get("/shoppingcart", ProductController::renderCart, new ThymeleafTemplateEngine());
@@ -35,8 +39,6 @@ public class Main {
 
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
-
-//        get("/cart/show/", ProductController::renderCart, new ThymeleafTemplateEngine());
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
@@ -60,9 +62,7 @@ public class Main {
         Supplier canon = new Supplier("Canon", "Camera");
         supplierDataStore.add(canon);
 
-
         //setting up a new product category
-
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(tablet);
         ProductCategory notebook = new ProductCategory("Notebook", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
@@ -81,6 +81,4 @@ public class Main {
 
         productDataStore.add(new Product("Canon 5D Mark IV", 500f, "USD", "The EOS 5D Mark IV camera builds on the powerful legacy of the 5D series, offering amazing refinements in image quality, performance and versatility.", camera, canon));
     }
-
-
 }
