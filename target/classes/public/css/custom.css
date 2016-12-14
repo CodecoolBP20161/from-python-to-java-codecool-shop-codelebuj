@@ -107,3 +107,16 @@
 {
     text-align: center;
 }
+
+.container-right
+{
+    text-align: right;
+}
+
+.input-text {
+    border: 1px solid #222;
+    background: #fff;
+    text-align: left;
+    width:300px;
+    font-size:14pt;
+}

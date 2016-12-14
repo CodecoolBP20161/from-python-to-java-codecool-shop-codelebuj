@@ -15,22 +15,30 @@
 
 
 <form action="demo_form.asp">
-    <div>
-        First name: <input type="text" name="fname"><br></br></input>
-        Last name: <input type="text" name="lname"><br></br></input>
-        E-mail: <input type="text" name="email"><br></br></input>
-        Phone number: <input type="text" name="phonenumber"><br></br></input>
-        Billing address:<br></br>
-        Country: <input type="text" name="bacountry"><br></br></input>
-        City: <input type="text" name="bacity"><br></br></input>
-        Zip code: <input type="text" name="bazipcode"><br></br></input>
-        Street with number: <input type="text" name="baaddress"><br></br></input>
-        <input type="checkbox" name="similair">Billing and shipping address is the same<br></br></input>
-        Shipping address:<br></br>
-        Country: <input type="text" name="sacountry"><br></br></input>
-        City: <input type="text" name="sacity"><br></br></input>
-        Zip code: <input type="text" name="sazipcode"><br></br></input>
-        Street with number: <input type="text" name="saaddress"><br></br></input>
+    <div class="container">
+        <h2>Checkout</h2>
+        <p>Please fill it carefully</p>
+        <table>
+            <tbody>
+                <tr>
+                <tr><td><h5>First name: </h5></td><td><input class="input-text" type="text" name="fname"></input></td></tr>
+                <tr><td><h5>Last name: </h5></td><td><input class="input-text" type="text" name="lname"></input></td></tr>
+                <tr><td><h5>E-mail: </h5></td><td><input class="input-text" type="text" name="email"></input></td></tr>
+                <tr><td><h5>Phone number: </h5></td><td><input class="input-text" type="text" name="phonenumber"></input></td></tr>
+                <tr><td><h5>Billing address:</h5></td></tr>
+                <tr><td><h5>Country: </h5></td><td><input class="input-text" type="text" name="bacountry"></input></td></tr>
+                <tr><td><h5>City: </h5></td><td><input class="input-text" type="text" name="bacity"></input></td></tr>
+                <tr><td><h5>Zip code: </h5></td><td><input class="input-text" type="text" name="bazipcode"></input></td></tr>
+                <tr><td><h5>Street with number: </h5></td><td><input class="input-text" type="text" name="baaddress"></input></td></tr>
+                <tr><td><input type="checkbox" name="similair"><h5>Billing and shipping address is the same</h5></input></td></tr>
+                <tr><td><h5>Shipping address:</h5></td></tr>
+                <tr><td><h5>Country: </h5></td><td><input class="input-text" type="text" name="sacountry"></input></td></tr>
+                <tr><td><h5>City: </h5></td><td><input class="input-text" type="text" name="sacity"></input></td></tr>
+                <tr><td><h5>Zip code: </h5></td><td><input class="input-text" type="text" name="sazipcode"></input></td></tr>
+                <tr><td><h5>Street with number: </h5></td><td><input class="input-text" type="text" name="saaddress"></input></td></tr>
+                </tr>
+            </tbody>
+        </table>
         <a th:href="'/payment'"><button type="button" class="btn btn-default btn-sm">Payment</button></a>
     </div>
 </form>
