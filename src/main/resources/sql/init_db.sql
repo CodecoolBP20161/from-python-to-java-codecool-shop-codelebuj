@@ -43,11 +43,20 @@ CREATE TABLE orders
 (
 order_id SERIAL PRIMARY KEY,
 first_name VARCHAR (40),
-last_name VARCHAR (150),
-email VARCHAR (20),
-phone_number VARCHAR,
+last_name VARCHAR (40),
+email VARCHAR (100),
+phone_number INTEGER ,
 billing_address INTEGER REFERENCES address(address_id),
 shipping_address INTEGER REFERENCES address(address_id)
+);
+
+CREATE TABLE line_item
+(
+line_item_id SERIAL PRIMARY KEY,
+prder_id INTEGER REFERENCES orders(order_id),
+product_id INTEGER REFERENCES product(product_id),
+quantity INTEGER,
+full_price INTEGER
 );
 
 

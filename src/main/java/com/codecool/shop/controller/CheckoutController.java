@@ -35,7 +35,7 @@ public class CheckoutController {
         String shippingCountry = req.params("sacountry");
         String shippingCity = req.params("sacity");
         String shippingZip = req.params("sazipcode");
-        String shippiAddressInfo = req.params("saaddress");
+        String shippingAddressInfo = req.params("saaddress");
 
 
         Address billingaddress = new Address();
