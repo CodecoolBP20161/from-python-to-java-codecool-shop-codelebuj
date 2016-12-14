@@ -11,6 +11,9 @@ import spark.Response;
 import spark.ModelAndView;
 
 import java.util.HashMap;
+import java.util.Map;
+
+import static com.codecool.shop.controller.ProductController.renderParams;
 
 
 public class CartController {

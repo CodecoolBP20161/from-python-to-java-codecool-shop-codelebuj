@@ -22,7 +22,7 @@ VALUES ('Lenovo IdeaPad Miix 700', 'Keyboard cover is included. Fanless Core m5 
 INSERT INTO product (product_name, product_description, product_defaultprice, product_defaultcurrency, product_productcategory, product_supplier)
 VALUES ('Amazon Fire HD 8', 'Amazon s latest Fire HD 8 tablet is a great value for media consumption.', 89, 'USD', 1, 2);
 INSERT INTO product (product_name, product_description, product_defaultprice, product_defaultcurrency, product_productcategory, product_supplier)
-VALUES ('Lenovo Ideapad', 'hahi', 200, 'USD', 2, 2);
+VALUES ('Lenovo Ideapad', 'Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand', 200, 'USD', 2, 2);
 INSERT INTO product (product_name, product_description, product_defaultprice, product_defaultcurrency, product_productcategory, product_supplier)
 VALUES ('Hp Probook', 'Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand', 220, 'USD', 2, 2);
 INSERT INTO product (product_name, product_description, product_defaultprice, product_defaultcurrency, product_productcategory, product_supplier)

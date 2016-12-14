@@ -94,6 +94,10 @@
     text-align: right;
 }
 
+.buttonrigth{
+    float: right;
+}
+
 .quanmiddle
 {
     text-align: center;
