@@ -4,6 +4,7 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 import com.codecool.shop.controller.CartController;
 import com.codecool.shop.controller.CheckoutController;
+import com.codecool.shop.controller.PaymentController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.*;
@@ -38,6 +39,8 @@ public class Main {
         get("/shoppingcart", ProductController::renderCart, new ThymeleafTemplateEngine());
 
         get("/checkout", CheckoutController::renderCheckout, new ThymeleafTemplateEngine());
+
+        get("/payment", PaymentController::renderPayment, new ThymeleafTemplateEngine());
 
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
