@@ -52,7 +52,7 @@ shipping_address INTEGER REFERENCES address(address_id)
 
 CREATE TABLE line_item
 (
-liine_item_id SERIAL PRIMARY KEY,
+line_item_id SERIAL PRIMARY KEY,
 prder_id INTEGER REFERENCES orders(order_id),
 product_id INTEGER REFERENCES product(product_id),
 quantity INTEGER,
