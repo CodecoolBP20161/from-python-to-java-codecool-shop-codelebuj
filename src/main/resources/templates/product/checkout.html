@@ -14,24 +14,28 @@
 </div>
 
 
-<form action="demo_form.asp">
+<form action="/checkout" method="post">
     <div class="container">
         <h2>Checkout</h2>
-        <p>Please fill it carefully</p>
+        <h4>Please fill it carefully</h4>
         <table>
             <tbody>
                 <tr>
+                <tr><td><h3>Details:</h3></td></tr>
                 <tr><td><h5>First name: </h5></td><td><input class="input-text" type="text" name="fname"></input></td></tr>
                 <tr><td><h5>Last name: </h5></td><td><input class="input-text" type="text" name="lname"></input></td></tr>
                 <tr><td><h5>E-mail: </h5></td><td><input class="input-text" type="text" name="email"></input></td></tr>
                 <tr><td><h5>Phone number: </h5></td><td><input class="input-text" type="text" name="phonenumber"></input></td></tr>
-                <tr><td><h5>Billing address:</h5></td></tr>
+
+                <tr><td><h3>Billing address:</h3></td></tr>
                 <tr><td><h5>Country: </h5></td><td><input class="input-text" type="text" name="bacountry"></input></td></tr>
                 <tr><td><h5>City: </h5></td><td><input class="input-text" type="text" name="bacity"></input></td></tr>
                 <tr><td><h5>Zip code: </h5></td><td><input class="input-text" type="text" name="bazipcode"></input></td></tr>
                 <tr><td><h5>Street with number: </h5></td><td><input class="input-text" type="text" name="baaddress"></input></td></tr>
-                <tr><td><input type="checkbox" name="similair"><h5>Billing and shipping address is the same</h5></input></td></tr>
-                <tr><td><h5>Shipping address:</h5></td></tr>
+
+                <tr><td><span class="input container-right"><input type="checkbox" aria-label="..."></input></span></td><td><h5>Billing and shipping address same</h5></td></tr>
+
+                <tr><td><h3>Shipping address:</h3></td></tr>
                 <tr><td><h5>Country: </h5></td><td><input class="input-text" type="text" name="sacountry"></input></td></tr>
                 <tr><td><h5>City: </h5></td><td><input class="input-text" type="text" name="sacity"></input></td></tr>
                 <tr><td><h5>Zip code: </h5></td><td><input class="input-text" type="text" name="sazipcode"></input></td></tr>
@@ -39,7 +43,7 @@
                 </tr>
             </tbody>
         </table>
-        <a th:href="'/payment'"><button type="button" class="btn btn-default btn-sm">Payment</button></a>
+        <a th:href="'/checkout'"><button type="button" class="btn btn-default btn-sm">Payment</button></a>
     </div>
 </form>
 
