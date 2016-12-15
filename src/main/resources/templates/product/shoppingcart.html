@@ -45,12 +45,14 @@
 
         </tr>
         </tbody>
-         <!--FIX MEE!!!!-->
         <div>
         <tr class="alnright"><td><td><td><td><td><strong><u>Total Price</u></strong></td></td></td></td></td></tr>
         <tr class="alnright" th:each="i : ${cartp}"><td><td><td><td><td th:text="${i.totalPrice()}"></td></td></td></td></td></tr>
         </div>
     </table>
+    <div>
+        <a th:href="'/checkout'"><button type="button" class="btn btn-default btn-sm buttonrigth">Checkout</button></a>
+    </div>
 </div>
 
 <div th:replace="footer :: copy"></div>

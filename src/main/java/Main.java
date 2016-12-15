@@ -1,4 +1,6 @@
 import com.codecool.shop.controller.CartController;
+import com.codecool.shop.controller.CheckoutController;
+import com.codecool.shop.controller.PaymentController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
@@ -43,6 +45,11 @@ public class Main {
 
         get("/shoppingcart", ProductController::renderCart, new ThymeleafTemplateEngine());
 
+        get("/checkout", CheckoutController::renderCheckout, new ThymeleafTemplateEngine());
+
+        post("/checkout", CheckoutController::constructorOrder);
+
+        get("/payment", PaymentController::renderPayment, new ThymeleafTemplateEngine());
 
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
@@ -82,7 +89,7 @@ public class Main {
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
 
-        productDataStore.add(new Product("Lenovo Ideapad", 200f, "USD", "hahi", notebook, lenovo));
+        productDataStore.add(new Product("Lenovo Ideapad", 200f, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand", notebook, lenovo));
         productDataStore.add(new Product("Hp Probook", 220f, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", notebook, lenovo));
         productDataStore.add(new Product("Aspire R 14", 800f, "USD", "Cutting-edge graphics and top performance for the ultimate entertainment experience.", notebook, acer));
 
