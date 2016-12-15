@@ -40,6 +40,7 @@ public class CheckoutController {
         String billingCity = req.queryParams("bacity");
         String billingZip = req.queryParams("bazipcode");
         String billingAddressInfo = req.queryParams("baaddress");
+        String checkb = req.queryParams("checkb");
         String shippingCountry = req.queryParams("sacountry");
         String shippingCity = req.queryParams("sacity");
         String shippingZip = req.queryParams("sazipcode");
@@ -47,10 +48,15 @@ public class CheckoutController {
 
         Address billingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
         adressDataStore.add(billingaddress);
-        Address shippingaddress = new Address(shippaddressId,shippingCountry,shippingCity,shippingZip,shippingAddressInfo);
-        adressDataStore.add(shippingaddress);
+        Address shippingaddress = null;
+        if (checkb != null){
+            shippingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
+            adressDataStore.add(shippingaddress);
+        }else {
+            shippingaddress = new Address(shippaddressId, shippingCountry, shippingCity, shippingZip, shippingAddressInfo);
+            adressDataStore.add(shippingaddress);
+        }
         Order order = new Order(orderId, firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
-
         orderDataStore.add(order);
         res.redirect("/payment");
         return null;
