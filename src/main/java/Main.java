@@ -1,13 +1,18 @@
-import static spark.Spark.*;
-import static spark.Spark.get;
-import static spark.debug.DebugScreen.enableDebugScreen;
-
 import com.codecool.shop.controller.CartController;
 import com.codecool.shop.controller.ProductController;
-import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementation.*;
-import com.codecool.shop.model.*;
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
+import static spark.Spark.*;
+import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main {
 
@@ -31,6 +36,8 @@ public class Main {
         post("/add/:product_id", CartController::increaseCartItem, new ThymeleafTemplateEngine());
 
         post("/remove/:product_id", CartController::decreaseCartItem, new ThymeleafTemplateEngine());
+
+        post("/delete/:product_id", CartController::deleteCartItem, new ThymeleafTemplateEngine());
 
         get("/supplier/:supplier_id", ProductController::renderProductsBySupplier, new ThymeleafTemplateEngine());
 

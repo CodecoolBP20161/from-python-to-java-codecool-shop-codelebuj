@@ -39,9 +39,7 @@
 
                 <td th:text="${i.product.getDefaultPrice()}">A</td>
                 <td class="td-size-plus" th:text="${i.getFullPrice()}">A</td>
-                <td><button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-trash"></span> Trash
-                </button></td>
+                <td> <form th:action="'/delete/' + ${i.product.id}" method="post"><button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span> Trash</button></form></td>
             </div>
             <!-- - name of the Product-->
 
