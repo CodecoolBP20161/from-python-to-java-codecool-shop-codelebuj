@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS productCategory;
 DROP TABLE IF EXISTS supplier;
 DROP TABLE IF EXISTS address;
 DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS line_item;
+
 
 CREATE TABLE productCategory
 (
@@ -35,7 +37,7 @@ CREATE TABLE address
 address_id SERIAL PRIMARY KEY ,
 country VARCHAR ,
 city VARCHAR ,
-zipcode INT,
+zipcode VARCHAR(10),
 address_info VARCHAR
 );
 
@@ -44,17 +46,17 @@ CREATE TABLE orders
 order_id SERIAL PRIMARY KEY,
 first_name VARCHAR (40),
 last_name VARCHAR (40),
-email VARCHAR (100),
-phone_number INTEGER ,
-billing_address INTEGER REFERENCES address(address_id),
-shipping_address INTEGER REFERENCES address(address_id)
+email VARCHAR (60),
+phone_number VARCHAR(20),
+billing_address INTEGER REFERENCES address(address_id) on delete cascade on update cascade,
+shipping_address INTEGER REFERENCES address(address_id) on delete cascade on update cascade
 );
 
 CREATE TABLE line_item
 (
 line_item_id SERIAL PRIMARY KEY,
-prder_id INTEGER REFERENCES orders(order_id),
-product_id INTEGER REFERENCES product(product_id),
+line_order_id INTEGER REFERENCES orders(order_id) on delete cascade on update cascade,
+line_product_id INTEGER REFERENCES product(product_id) on delete cascade on update cascade,
 quantity INTEGER,
 full_price INTEGER
 );

@@ -2,10 +2,13 @@ package com.codecool.shop.controller;
 
 
 
+import com.codecool.shop.dao.AddressDao;
 import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.implementation.AddressDaoJdbc;
 import com.codecool.shop.dao.implementation.OrderDaoJdbc;
 import com.codecool.shop.model.Address;
 import com.codecool.shop.model.Order;
+import com.codecool.shop.util.IdGenerator;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -16,7 +19,8 @@ import java.util.Map;
 
 public class CheckoutController {
 
-    static private OrderDao orderDataStore = OrderDaoJdbc.getInstance();
+    private static OrderDao orderDataStore = OrderDaoJdbc.getInstance();
+    private static AddressDao adressDataStore = AddressDaoJdbc.getInstance();
 
     public static ModelAndView renderCheckout(Request req, Response res){
         Map params = ProductController.renderParams(req, res);
@@ -24,27 +28,32 @@ public class CheckoutController {
     }
 
     public static String constructorOrder(Request req, Response res){
-        String firstName = req.params("fname");
-        String lastName = req.params("lname");
-        String email = req.params("email");
-        int phoneNumber = Integer.parseInt(req.params("phoneNumber"));
-        String billingCountry = req.params("bacountry");
-        String billingCity = req.params("bacity");
-        int billingZip = Integer.parseInt(req.params("bazipcode"));
-        String billingAddressInfo = req.params("baaddress");
-        String shippingCountry = req.params("sacountry");
-        String shippingCity = req.params("sacity");
-        int shippingZip = Integer.parseInt(req.params("sazipcode"));
-        String shippingAddressInfo = req.params("saaddress");
+        int orderId = IdGenerator.getInstance().getNextId();
+        int billaddressId = IdGenerator.getInstance().getNextId();
+        int shippaddressId = IdGenerator.getInstance().getNextId();
 
+        String firstName = req.queryParams("fname");
+        String lastName = req.queryParams("lname");
+        String email = req.queryParams("email");
+        String phoneNumber = req.queryParams("phonenumber");
+        String billingCountry = req.queryParams("bacountry");
+        String billingCity = req.queryParams("bacity");
+        String billingZip = req.queryParams("bazipcode");
+        String billingAddressInfo = req.queryParams("baaddress");
+        String shippingCountry = req.queryParams("sacountry");
+        String shippingCity = req.queryParams("sacity");
+        String shippingZip = req.queryParams("sazipcode");
+        String shippingAddressInfo = req.queryParams("saaddress");
 
-        Address billingaddress = new Address(1,billingCountry,billingCity,billingZip,billingAddressInfo);
-        Address shippingaddress = new Address(2,shippingCountry,shippingCity,shippingZip,shippingAddressInfo);
-        Order order = new Order(3, firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
+        Address billingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
+        adressDataStore.add(billingaddress);
+        Address shippingaddress = new Address(shippaddressId,shippingCountry,shippingCity,shippingZip,shippingAddressInfo);
+        adressDataStore.add(shippingaddress);
+        Order order = new Order(orderId, firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
+
         orderDataStore.add(order);
         res.redirect("/payment");
         return null;
     }
-
 
 }

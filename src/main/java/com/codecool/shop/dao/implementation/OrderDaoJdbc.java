@@ -2,9 +2,10 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.model.Order;
-import com.codecool.shop.util.IdGenerator;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
 
@@ -32,25 +33,19 @@ public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
     @Override
     public void add(Order order){
         try {
-            int id = IdGenerator.getInstance().getNextId();
-            order.setId(id);
-            String query = "INSERT INTO order (order_id, first_name, last_name, email, phone_number, billing_address, shipping_address) VALUES (?,?,?,?,?,?,?);";
+            String query = "INSERT INTO orders (order_id, first_name, last_name, email, phone_number, billing_address, shipping_address) VALUES (?,?,?,?,?,?,?);";
             PreparedStatement safeInput = getConnection().prepareStatement(query);
             safeInput.setInt(1,order.getId());
             safeInput.setString(2,order.getFirstName());
             safeInput.setString(3,order.getLastName());
             safeInput.setString(4,order.getEmail());
-            safeInput.setInt(5,order.getPhoneNumber());
-            safeInput.setObject(6,order.getBillingAddress());
-            safeInput.setObject(7,order.getShippingAddress());
+            safeInput.setString(5,order.getPhoneNumber());
+            safeInput.setInt(6,order.getBillingAddress().getId());
+            safeInput.setInt(7,order.getShippingAddress().getId());
             safeInput.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
-
-
 }

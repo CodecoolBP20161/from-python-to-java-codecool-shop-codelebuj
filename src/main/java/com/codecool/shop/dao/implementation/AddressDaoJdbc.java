@@ -37,14 +37,14 @@ public class AddressDaoJdbc extends ConnectionDb implements AddressDao {
         int id = IdGenerator.getInstance().getNextId();
         address.setId(id);
 
-        String query = "INSERT INTO address (address_id, country, city, zipcode, address_info) VALUES (?,?,?,?,?);";
         try {
+            String query = "INSERT INTO address (address_id, country, city, zipcode, address_info) VALUES (?,?,?,?,?);";
             PreparedStatement safeInput = getConnection().prepareStatement(query);
             safeInput.setInt(1,address.getId());
             safeInput.setString(2,address.getCountry());
             safeInput.setString(3,address.getCity());
-            safeInput.setString(4, String.valueOf(address.getZipCode()));
-            safeInput.setInt(5, Integer.parseInt(address.getAddressInfo()));
+            safeInput.setString(4, address.getZipCode());
+            safeInput.setString(5, address.getAddressInfo());
             safeInput.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
