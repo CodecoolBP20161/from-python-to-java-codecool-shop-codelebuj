@@ -1,10 +1,12 @@
 package com.codecool.shop.model;
 
+import javax.sound.sampled.Line;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartImpl implements Cart {
-    private ArrayList<LineItem> lineItems = new ArrayList<>();
+    private List<LineItem> lineItems = new ArrayList<>();
     private int totalQuantity;
     private float totalPrice;
 
@@ -29,12 +31,36 @@ public class CartImpl implements Cart {
 
     @Override
     public void removeProduct(Product product){
+        LineItem nullItem = null;
         for (LineItem item : lineItems) {
             if (item.getProduct().getId() == product.getId()) {
                 item.decreaseQuantity(1);
+                if (item.getQuantity() == 0) {
+                    nullItem = item;
+                }
             }
         }
+        if (nullItem != null) {
+            this.remove(nullItem);
+        }
+    }
 
+    public void deleteAllProduct(Product product){
+        LineItem deleteItem = null;
+        for (LineItem item : lineItems){
+            if (item.getProduct().getId() == product.getId()){
+                deleteItem = item;
+            }
+        }
+        if (deleteItem != null) {
+            this.remove(deleteItem);
+        }
+
+
+    }
+
+    public void remove(LineItem items) {
+        this.lineItems.remove(items);
     }
 
 
