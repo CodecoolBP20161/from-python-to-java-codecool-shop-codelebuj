@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartImpl implements Cart {
-    private ArrayList<LineItem> lineItems = new ArrayList<>();
+    private List<LineItem> lineItems = new ArrayList<>();
     private int totalQuantity;
     private float totalPrice;
 

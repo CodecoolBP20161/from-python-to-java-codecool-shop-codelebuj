@@ -5,6 +5,7 @@ public class LineItem {
     private Product product;
     private int quantity;
     private float fullPrice;
+    private Order order;
 
     public void LineItem(){}
 
