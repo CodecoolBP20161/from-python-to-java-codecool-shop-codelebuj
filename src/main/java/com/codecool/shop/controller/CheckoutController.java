@@ -29,7 +29,7 @@ public class CheckoutController {
         Map params = ProductController.renderParams(req, res);
         return new ModelAndView(params, "product/checkout");
     }
-
+//Gather the data from html form
     public static String constructorOrder(Request req, Response res){
         int orderId = IdGenerator.getInstance().getNextId();
         int billaddressId = IdGenerator.getInstance().getNextId();
@@ -49,10 +49,12 @@ public class CheckoutController {
         String shippingZip = req.queryParams("sazipcode");
         String shippingAddressInfo = req.queryParams("saaddress");
 
-
+//create address instance
         Address billingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
         adressDataStore.add(billingaddress);
         Address shippingaddress = null;
+        // depending on weather the checkbox checked or not, we create shipping address,
+        // then insert into the address table
         if (checkb != null){
             shippingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
             adressDataStore.add(shippingaddress);
@@ -60,11 +62,13 @@ public class CheckoutController {
             shippingaddress = new Address(shippaddressId, shippingCountry, shippingCity, shippingZip, shippingAddressInfo);
             adressDataStore.add(shippingaddress);
         }
+        // create order instance with addresses
         Order order = new Order(orderId, firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
         orderDataStore.add(order);
 
-
+        // get the session to see what the user added to the cart so far
         Cart cart = req.session().attribute("cart");
+        // Insert lineitems with order Id into lineitem table
         for (LineItem lineItem : cart.getLineItems()){
             lineItemDataStore.add(lineItem, order);
         }
