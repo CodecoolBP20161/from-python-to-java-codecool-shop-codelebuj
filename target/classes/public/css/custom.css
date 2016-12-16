@@ -103,6 +103,7 @@
     text-align: center;
 }
 
+
 .undercon
 {
     text-align: center;
@@ -119,4 +120,7 @@
     text-align: left;
     width:300px;
     font-size:14pt;
+=======
+form {
+    display: inline;
 }
