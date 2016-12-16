@@ -3,16 +3,18 @@ package com.codecool.shop.controller;
 
 
 import com.codecool.shop.dao.AddressDao;
+import com.codecool.shop.dao.LineItemDao;
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.implementation.AddressDaoJdbc;
+import com.codecool.shop.dao.implementation.LineItemDaoJdbcImpl;
 import com.codecool.shop.dao.implementation.OrderDaoJdbc;
-import com.codecool.shop.model.Address;
-import com.codecool.shop.model.Order;
+import com.codecool.shop.model.*;
 import com.codecool.shop.util.IdGenerator;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -21,6 +23,7 @@ public class CheckoutController {
 
     private static OrderDao orderDataStore = OrderDaoJdbc.getInstance();
     private static AddressDao adressDataStore = AddressDaoJdbc.getInstance();
+    private static LineItemDao lineItemDataStore = LineItemDaoJdbcImpl.getInstance();
 
     public static ModelAndView renderCheckout(Request req, Response res){
         Map params = ProductController.renderParams(req, res);
@@ -46,6 +49,7 @@ public class CheckoutController {
         String shippingZip = req.queryParams("sazipcode");
         String shippingAddressInfo = req.queryParams("saaddress");
 
+
         Address billingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
         adressDataStore.add(billingaddress);
         Address shippingaddress = null;
@@ -58,6 +62,12 @@ public class CheckoutController {
         }
         Order order = new Order(orderId, firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
         orderDataStore.add(order);
+
+
+        Cart cart = req.session().attribute("cart");
+        for (LineItem lineItem : cart.getLineItems()){
+            lineItemDataStore.add(lineItem, order);
+        }
         res.redirect("/payment");
         return null;
     }

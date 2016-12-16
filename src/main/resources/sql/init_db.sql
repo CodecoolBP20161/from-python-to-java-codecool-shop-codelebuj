@@ -55,10 +55,10 @@ shipping_address INTEGER REFERENCES address(address_id) on delete cascade on upd
 CREATE TABLE line_item
 (
 line_item_id SERIAL PRIMARY KEY,
-line_order_id INTEGER REFERENCES orders(order_id) on delete cascade on update cascade,
-line_product_id INTEGER REFERENCES product(product_id) on delete cascade on update cascade,
+order_id INTEGER REFERENCES orders(order_id) on delete cascade on update cascade,
+product_id INTEGER REFERENCES product(product_id) on delete cascade on update cascade,
 quantity INTEGER,
-full_price INTEGER
+default_price INTEGER
 );
 
 
