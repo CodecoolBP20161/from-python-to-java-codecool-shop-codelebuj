@@ -57,7 +57,8 @@ public class Main {
 
 
 
-        get("/aaa", GetTop5Controller::getTop5);
+        get("/gettop5", GetTop5Controller::getTop5);
+        post("/addproduct", GetTop5Controller::sendProduct);
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
