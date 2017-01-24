@@ -6,14 +6,20 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.ModelAndView;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ProductController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     static private ProductDao productDataStore = ProductDaoJdbcImpl.getInstance();
     static private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
@@ -33,6 +39,13 @@ public class ProductController {
         params.put("categories", productCategoryDataStore.getAll());
         params.put("suppliers", productSupplierDataStore.getAll());
         params.put("cartquantity", getCartQuantity(req));
+        try {
+            params.put("top5", GetTop5Controller.getTop5(req, res));
+        } catch (IOException e) {
+            logger.info("Is empty");
+        } catch (URISyntaxException e) {
+            logger.info("URI not good");
+        }
         return params;
     }
 
