@@ -56,15 +56,15 @@ public class GetTop5Controller {
 
         org.json.simple.JSONArray array = new org.json.simple.JSONArray();
         Cart cart = request.session().attribute("cart");
+
         if (cart != null) {
-            JSONObject item = new JSONObject();
             for (LineItem lineItem : cart.getLineItems()) {
+                JSONObject item = new JSONObject();
                 item.put("id", lineItem.getProduct().getId());
                 item.put("quantity", lineItem.getQuantity());
                 array.add(item);
             }
         }
-        System.out.println(array.toJSONString());
         StringEntity js = new StringEntity(array.toString());
 
         Request.Post(SERVICE_URL + API_KEY + "/addproduct").body(js).execute();
