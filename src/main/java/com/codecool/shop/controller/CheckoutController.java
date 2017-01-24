@@ -8,13 +8,17 @@ import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.implementation.AddressDaoJdbc;
 import com.codecool.shop.dao.implementation.LineItemDaoJdbcImpl;
 import com.codecool.shop.dao.implementation.OrderDaoJdbc;
-import com.codecool.shop.model.*;
+import com.codecool.shop.model.Address;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.LineItem;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.util.IdGenerator;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Map;
 
 
@@ -71,6 +75,14 @@ public class CheckoutController {
         // Insert lineitems with order Id into lineitem table
         for (LineItem lineItem : cart.getLineItems()){
             lineItemDataStore.add(lineItem, order);
+        }
+        GetTop5Controller x = new GetTop5Controller();
+        try {
+            x.sendProduct(req,res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
         res.redirect("/payment");
         return null;
