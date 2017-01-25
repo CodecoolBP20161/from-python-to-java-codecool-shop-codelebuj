@@ -1,11 +1,12 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.model.Address;
 import com.codecool.shop.model.Order;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
 
@@ -48,4 +49,41 @@ public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
             e.printStackTrace();
         }
     }
+
+    public List<Order> getAll(){
+        String query = "select * from order inner join address on order.shipping_address = address.address_id and order.billing_address = address.address.address_id;";
+        Order found = null;
+        List<Order> resultList = new ArrayList<>();
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)
+        ){
+            while (resultSet.next()){
+                Address billingAddress = new Address(
+                        resultSet.getInt("address_id"),
+                        resultSet.getString("country"),
+                        resultSet.getString("city"),
+                        resultSet.getString("zipCode"),
+                        resultSet.getString("addressInfo"));
+                Address shippingAddress = new Address(
+                        resultSet.getInt("address_id"),
+                        resultSet.getString("country"),
+                        resultSet.getString("city"),
+                        resultSet.getString("zipCode"),
+                        resultSet.getString("addressInfo"));
+                Order actTodo = new Order(resultSet.getInt("order_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone_number"),
+                        billingAddress, shippingAddress);
+                resultList.add(actTodo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+
+    }
+
 }
