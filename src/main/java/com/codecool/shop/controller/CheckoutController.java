@@ -8,13 +8,15 @@ import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.implementation.AddressDaoJdbc;
 import com.codecool.shop.dao.implementation.LineItemDaoJdbcImpl;
 import com.codecool.shop.dao.implementation.OrderDaoJdbc;
-import com.codecool.shop.model.*;
+import com.codecool.shop.model.Address;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.LineItem;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.util.IdGenerator;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -66,8 +68,11 @@ public class CheckoutController {
         Order order = new Order(orderId, firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
         orderDataStore.add(order);
 
+        req.session().attribute("order",order);
+
         // get the session to see what the user added to the cart so far
         Cart cart = req.session().attribute("cart");
+
         // Insert lineitems with order Id into lineitem table
         for (LineItem lineItem : cart.getLineItems()){
             lineItemDataStore.add(lineItem, order);
