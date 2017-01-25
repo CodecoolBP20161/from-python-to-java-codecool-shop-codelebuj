@@ -1,7 +1,6 @@
 package com.codecool.shop.controller;
 
 
-
 import com.codecool.shop.dao.AddressDao;
 import com.codecool.shop.dao.LineItemDao;
 import com.codecool.shop.dao.OrderDao;
@@ -12,6 +11,9 @@ import com.codecool.shop.model.Address;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
+import com.codecool.shop.util.IdGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -24,6 +26,8 @@ import java.util.Map;
 
 public class CheckoutController {
 
+    private static final Logger log = LoggerFactory.getLogger(CheckoutController.class);
+
     private static OrderDao orderDataStore = OrderDaoJdbc.getInstance();
     private static AddressDao adressDataStore = AddressDaoJdbc.getInstance();
     private static LineItemDao lineItemDataStore = LineItemDaoJdbcImpl.getInstance();
@@ -34,9 +38,9 @@ public class CheckoutController {
     }
 //Gather the data from html form
     public static String constructorOrder(Request req, Response res){
-//        int orderId = IdGenerator.getInstance().getNextId();
-//        int billaddressId = IdGenerator.getInstance().getNextId();
-//        int shippaddressId = IdGenerator.getInstance().getNextId();
+        int orderId = IdGenerator.getInstance().getNextId();
+        int billaddressId = IdGenerator.getInstance().getNextId();
+        int shippaddressId = IdGenerator.getInstance().getNextId();
 
         String firstName = req.queryParams("fname");
         String lastName = req.queryParams("lname");
@@ -53,26 +57,28 @@ public class CheckoutController {
         String shippingAddressInfo = req.queryParams("saaddress");
 
 //create address instance
-//        Address billingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
-        Address billingaddress = new Address(billingCountry,billingCity,billingZip,billingAddressInfo);
-
+        Address billingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
         adressDataStore.add(billingaddress);
+
+        log.info(String.valueOf(billingaddress.getId()));
         Address shippingaddress = null;
-//         depending on weather the checkbox checked or not, we create shipping address,
-//         then insert into the address table
+
         if (checkb != null){
-//            shippingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
-            shippingaddress = new Address(billingCountry,billingCity,billingZip,billingAddressInfo);
+            log.info(String.valueOf("billing a "+billingaddress.getId()));
+
+            shippingaddress = new Address(shippaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
+            log.info(String.valueOf("shippin a. "+shippingaddress.getId()));
 
             adressDataStore.add(shippingaddress);
         }else {
-            shippingaddress = new Address(shippingCountry, shippingCity, shippingZip, shippingAddressInfo);
+            log.info(String.valueOf("billing a2 "+billingaddress.getId()));
+            shippingaddress = new Address(shippaddressId,shippingCountry, shippingCity, shippingZip, shippingAddressInfo);
+            log.info(String.valueOf("shippin a2 "+shippingaddress.getId()));
+
             adressDataStore.add(shippingaddress);
         }
         // create order instance with addresses
-//        Order order = new Order(orderId, firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
-        Order order = new Order(firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
-
+        Order order = new Order(orderId,firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
         orderDataStore.add(order);
 
         // get the session to see what the user added to the cart so far

@@ -1,7 +1,7 @@
 package com.codecool.shop.model;
 
 public class Order {
-    private static int id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -11,7 +11,6 @@ public class Order {
 
 
     public Order(String firstName, String lastName, String email, String phoneNumber, Address billingAddress, Address shippingAddress) {
-        this.id = ++id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

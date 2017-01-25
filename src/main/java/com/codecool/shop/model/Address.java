@@ -1,14 +1,13 @@
 package com.codecool.shop.model;
 
 public class Address {
-    private static int id;
+    private int id;
     private String country;
     private String city;
     private String zipCode;
     private String addressInfo;
 
     public Address( String country, String city, String zipCode, String addressInfo) {
-        this.id = id++;
         this.country = country;
         this.city = city;
         this.zipCode = zipCode;
