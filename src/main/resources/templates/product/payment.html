@@ -16,18 +16,17 @@
 <div>
     <h2 class="undercon">Payment Details</h2>
     <div class="container">
-
             <table>
                 <tbody>
-                <tr>
-                <tr><td><h3>Your Shipping Address</h3></td></tr>
-                <tr><td><h5>First name: </h5></td><td>Name</td></tr>
-                <tr><td><h5>Last name: </h5></td><td>Last</td></tr>
-                <tr><td><h5>Country: </h5></td><td>country</td></tr>
-                <tr><td><h5>City: </h5></td><td>city</td></tr>
+                <tr th:each="i : ${order_id}">
+                <tr><td><h3>Your Data</h3></td></tr>
+                <tr><td><h5>First name: </h5></td><td th:text="${i.fname}">Name</td></tr>
+                <tr><td><h5>Last name: </h5></td><td th:text="${i.lname}">Last</td></tr>
+                <tr><td><h5>Billing Address: </h5></td></tr>
+                <tr><td><h5>Country: </h5></td><td th:text="${i.bacountry}">country</td></tr>
+                <tr><td><h5>City: </h5></td><td>city</td><td th:text="${i.fname}">Info</td></tr>
                 <tr><td><h5>Zip code: </h5></td><td>zipcode</td></tr>
                 <tr><td><h5>Street with number: </h5></td><td>street</td></tr>
-                </tr>
                 </tbody>
             </table>
 
