@@ -51,7 +51,7 @@ public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
     }
 
     public List<Order> getAll(){
-        String query = "select * from order inner join address on order.shipping_address = address.address_id and order.billing_address = address.address.address_id;";
+        String query = "select * from orders inner join address on orders.shipping_address = address.address_id and orders.billing_address = address.address_id;";
         Order found = null;
         List<Order> resultList = new ArrayList<>();
         try (Connection connection = getConnection();
@@ -84,6 +84,41 @@ public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
         }
         return resultList;
 
+    }
+
+    public Order find(int id) {
+        String query = "select * from orders inner join address on orders.billing_address = address.address_id and orders.shipping_address = address.address_id WHERE order_id = "+ id+ ";";
+        Order found = null;
+        try {Connection connection = getConnection();
+            Statement stmt = connection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            if (resultSet.next()) {
+                Address billingAddress = new Address(
+                        resultSet.getInt("address_id"),
+                        resultSet.getString("country"),
+                        resultSet.getString("city"),
+                        resultSet.getString("zipCode"),
+                        resultSet.getString("addressInfo"));
+                Address shippingAddress = new Address(
+                        resultSet.getInt("address_id"),
+                        resultSet.getString("country"),
+                        resultSet.getString("city"),
+                        resultSet.getString("zipCode"),
+                        resultSet.getString("addressInfo"));
+
+                found = new Order(
+                        resultSet.getInt("order_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone_number"),
+                        billingAddress, shippingAddress);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return found;
     }
 
 }
