@@ -12,7 +12,6 @@ import com.codecool.shop.model.Address;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
-import com.codecool.shop.util.IdGenerator;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -35,9 +34,9 @@ public class CheckoutController {
     }
 //Gather the data from html form
     public static String constructorOrder(Request req, Response res){
-        int orderId = IdGenerator.getInstance().getNextId();
-        int billaddressId = IdGenerator.getInstance().getNextId();
-        int shippaddressId = IdGenerator.getInstance().getNextId();
+//        int orderId = IdGenerator.getInstance().getNextId();
+//        int billaddressId = IdGenerator.getInstance().getNextId();
+//        int shippaddressId = IdGenerator.getInstance().getNextId();
 
         String firstName = req.queryParams("fname");
         String lastName = req.queryParams("lname");
@@ -54,20 +53,26 @@ public class CheckoutController {
         String shippingAddressInfo = req.queryParams("saaddress");
 
 //create address instance
-        Address billingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
+//        Address billingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
+        Address billingaddress = new Address(billingCountry,billingCity,billingZip,billingAddressInfo);
+
         adressDataStore.add(billingaddress);
         Address shippingaddress = null;
-        // depending on weather the checkbox checked or not, we create shipping address,
-        // then insert into the address table
+//         depending on weather the checkbox checked or not, we create shipping address,
+//         then insert into the address table
         if (checkb != null){
-            shippingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
+//            shippingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
+            shippingaddress = new Address(billingCountry,billingCity,billingZip,billingAddressInfo);
+
             adressDataStore.add(shippingaddress);
         }else {
-            shippingaddress = new Address(shippaddressId, shippingCountry, shippingCity, shippingZip, shippingAddressInfo);
+            shippingaddress = new Address(shippingCountry, shippingCity, shippingZip, shippingAddressInfo);
             adressDataStore.add(shippingaddress);
         }
         // create order instance with addresses
-        Order order = new Order(orderId, firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
+//        Order order = new Order(orderId, firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
+        Order order = new Order(firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
+
         orderDataStore.add(order);
 
         // get the session to see what the user added to the cart so far
@@ -77,6 +82,7 @@ public class CheckoutController {
             lineItemDataStore.add(lineItem, order);
         }
         GetTop5Controller x = new GetTop5Controller();
+
         try {
             x.sendProduct(req,res);
         } catch (IOException e) {
