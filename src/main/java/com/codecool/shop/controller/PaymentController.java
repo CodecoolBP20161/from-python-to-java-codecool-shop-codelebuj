@@ -29,11 +29,13 @@ public class PaymentController {
 
         JSONObject jsonObject = new JSONObject(execute(destination));
         int shippingfee = jsonObject.getJSONObject("expressCourier").getInt("cost");
+        int time = jsonObject.getJSONObject("expressCourier").getInt("timeInHours");
         int distance = jsonObject.getJSONObject("expressCourier").getInt("distanceInKm");
         String currency = jsonObject.getJSONObject("expressCourier").getString("currency");
         String details = jsonObject.getJSONObject("expressCourier").getString("details");
 
         params.put("totalPrice", shippingfee + cart.totalPrice());
+        params.put("time", time);
         params.put("shippingfee", shippingfee);
         params.put("distance",distance);
         params.put("currency", currency);
@@ -51,7 +53,6 @@ public class PaymentController {
         params.put("bazipcode", customerDetails.getBillingAddress().getZipCode());
         params.put("baaddress", customerDetails.getBillingAddress().getAddressInfo());
 
-        req.session().invalidate();
         return new ModelAndView(params, "product/payment");
     }
 

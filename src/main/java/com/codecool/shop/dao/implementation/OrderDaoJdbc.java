@@ -52,7 +52,6 @@ public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
 
     public List<Order> getAll(){
         String query = "select * from orders inner join address on orders.shipping_address = address.address_id and orders.billing_address = address.address_id;";
-        Order found = null;
         List<Order> resultList = new ArrayList<>();
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
@@ -120,5 +119,4 @@ public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
         }
         return found;
     }
-
 }
