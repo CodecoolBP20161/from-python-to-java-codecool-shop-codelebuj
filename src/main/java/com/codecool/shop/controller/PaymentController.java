@@ -55,17 +55,10 @@ public class PaymentController {
         return new ModelAndView(params, "product/payment");
     }
 
-    public static String getShiipingFee(spark.Request request, spark.Response response) {
-        Order details = request.session().attribute("order");
-        String destination = String.valueOf(details.getShippingAddress());
-        System.out.println("SESSION " + details);
-        return "";
-    }
-
-    //public static int getTotalPrice(Response res, spark.Request req)
 
     private static String execute(String urlDestination) throws IOException, URISyntaxException {
         URI uri = new URIBuilder(SERVICE_URL + urlDestination ).build();
         return Request.Get(uri).execute().returnContent().asString();
     }
+
 }
