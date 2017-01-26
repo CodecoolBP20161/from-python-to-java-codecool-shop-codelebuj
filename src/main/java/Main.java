@@ -51,6 +51,7 @@ public class Main {
         post("/checkout", CheckoutController::constructorOrder);
 
         get("/payment", PaymentController::renderPayment, new ThymeleafTemplateEngine());
+        get("/thankyou", CompletePaymentController::renderCompletePayment, new ThymeleafTemplateEngine());
 
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());

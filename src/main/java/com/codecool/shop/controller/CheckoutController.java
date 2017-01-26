@@ -20,6 +20,7 @@ import spark.Response;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+
 import java.util.Map;
 
 
@@ -81,8 +82,11 @@ public class CheckoutController {
         Order order = new Order(orderId,firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
         orderDataStore.add(order);
 
+        req.session().attribute("order",order);
+
         // get the session to see what the user added to the cart so far
         Cart cart = req.session().attribute("cart");
+
         // Insert lineitems with order Id into lineitem table
         for (LineItem lineItem : cart.getLineItems()){
             lineItemDataStore.add(lineItem, order);
