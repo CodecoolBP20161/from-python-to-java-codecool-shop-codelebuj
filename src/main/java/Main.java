@@ -1,7 +1,4 @@
-import com.codecool.shop.controller.CartController;
-import com.codecool.shop.controller.CheckoutController;
-import com.codecool.shop.controller.PaymentController;
-import com.codecool.shop.controller.ProductController;
+import com.codecool.shop.controller.*;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
@@ -50,6 +47,7 @@ public class Main {
         post("/checkout", CheckoutController::constructorOrder);
 
         get("/payment", PaymentController::renderPayment, new ThymeleafTemplateEngine());
+        get("/thankyou", CompletePaymentController::renderCompletePayment, new ThymeleafTemplateEngine());
 
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
