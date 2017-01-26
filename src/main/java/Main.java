@@ -1,7 +1,4 @@
-import com.codecool.shop.controller.CartController;
-import com.codecool.shop.controller.CheckoutController;
-import com.codecool.shop.controller.PaymentController;
-import com.codecool.shop.controller.ProductController;
+import com.codecool.shop.controller.*;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
@@ -18,11 +15,15 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main {
 
+    GetTop5Controller controller;
+
     public static void main(String[] args) {
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("/public");
+        Main application = new Main();
+        application.controller = new GetTop5Controller();
         port(8888);
 
         // populate some data for the memory storage
@@ -50,9 +51,15 @@ public class Main {
         post("/checkout", CheckoutController::constructorOrder);
 
         get("/payment", PaymentController::renderPayment, new ThymeleafTemplateEngine());
+        get("/thankyou", CompletePaymentController::renderCompletePayment, new ThymeleafTemplateEngine());
 
         // Always add generic routes to the end
         get("/", ProductController::renderAllProducts, new ThymeleafTemplateEngine());
+
+
+
+        get("/gettop5", GetTop5Controller::getTop5);
+        post("/addproduct", GetTop5Controller::sendProduct);
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
