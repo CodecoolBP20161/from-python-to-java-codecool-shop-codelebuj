@@ -10,7 +10,16 @@ public class Order {
     private Address shippingAddress;
 
 
-    public Order(int id, String firstName, String lastName, String email, String phoneNumber, Address billingAddress, Address shippingAddress) {
+    public Order(String firstName, String lastName, String email, String phoneNumber, Address billingAddress, Address shippingAddress) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
+    }
+
+    public Order(int id,String firstName, String lastName, String email, String phoneNumber, Address billingAddress, Address shippingAddress) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

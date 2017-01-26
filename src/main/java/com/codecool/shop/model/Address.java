@@ -7,7 +7,14 @@ public class Address {
     private String zipCode;
     private String addressInfo;
 
-    public Address(int id, String country, String city, String zipCode, String addressInfo) {
+    public Address( String country, String city, String zipCode, String addressInfo) {
+        this.country = country;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.addressInfo = addressInfo;
+    }
+
+    public Address( int id, String country, String city, String zipCode, String addressInfo) {
         this.id = id;
         this.country = country;
         this.city = city;

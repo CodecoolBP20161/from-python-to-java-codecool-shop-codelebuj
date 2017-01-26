@@ -34,7 +34,7 @@ product_productCategory INT REFERENCES productcategory(productcategory_id) on de
 
 CREATE TABLE address
 (
-address_id SERIAL PRIMARY KEY ,
+address_id INTEGER PRIMARY KEY ,
 country VARCHAR ,
 city VARCHAR ,
 zipcode VARCHAR(10),
@@ -43,7 +43,7 @@ address_info VARCHAR
 
 CREATE TABLE orders
 (
-order_id SERIAL PRIMARY KEY,
+order_id INTEGER PRIMARY KEY,
 first_name VARCHAR (40),
 last_name VARCHAR (40),
 email VARCHAR (60),

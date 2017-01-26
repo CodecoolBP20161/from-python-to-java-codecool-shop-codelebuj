@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="gettop5">
+
+    <div class="well well-sm">
+        <strong>Top Products</strong>
+    </div>
+
+    <div id="products" class="row list-group">
+
+        <div class="item col-xs-2 col-lg-2" th:each="top5Pro : ${top5}">
+
+            <div class="thumbnail">
+                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/img/product_' + ${top5Pro.id} + '.jpg'" alt="" />
+                <div class="caption">
+                    <h5 class="group inner list-group-item-heading" th:text="${top5Pro.name}">Product name</h5>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <form th:action="'/cart/'+ ${top5Pro.id}" method="get">
+                                <button class="btn btn-success">Add to cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
