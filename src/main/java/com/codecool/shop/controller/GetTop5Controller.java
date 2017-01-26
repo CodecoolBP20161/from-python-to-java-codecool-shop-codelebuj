@@ -25,7 +25,7 @@ public class GetTop5Controller {
 
     private static final Logger logger = LoggerFactory.getLogger(GetTop5Controller.class);
     private static final String SERVICE_URL = "http://localhost:60001/api/";
-    private static final String API_KEY = "negy";
+    private static final String API_KEY = "";
 
     static private ProductDao productDataStore = ProductDaoJdbcImpl.getInstance();
 

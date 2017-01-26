@@ -11,7 +11,6 @@ public class CompletePaymentController {
 
     public static ModelAndView renderCompletePayment(Request req, Response res){
         Map params = ProductController.renderParams(req, res);
-        req.session().invalidate();
         return new ModelAndView(params, "product/thankyou");
     }
 
