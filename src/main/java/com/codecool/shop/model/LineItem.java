@@ -44,8 +44,5 @@ public class LineItem {
     public LineItem(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
-        ;
-
-
     }
 }

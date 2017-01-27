@@ -1,8 +1,6 @@
 package com.codecool.shop.model;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 
 public class BaseModel {
 
@@ -60,14 +58,5 @@ public class BaseModel {
             }
         }
         return sb.toString();
-    }
-
-    public static class LineItem {
-        private Product product;
-        private int quantity;
-
-        public LineItem(Product product, int quantity){
-            Map<Product,Integer> cartItem = new HashMap<>();
-        }
     }
 }
