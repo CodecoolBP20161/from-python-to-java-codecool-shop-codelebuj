@@ -5,7 +5,6 @@ import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
@@ -32,18 +31,11 @@ public class LineItemDaoJdbcImpl extends ConnectionDb implements LineItemDao {
 
     @Override
     public void add(LineItem lineItem, Order order) {
-        try {
-            String query = "INSERT INTO line_item (order_id, product_id, quantity, default_price) VALUES (?,?,?,?);";
-            PreparedStatement safeInput = getConnection().prepareStatement(query);
-            safeInput.setInt(1,order.getId());
-            safeInput.setInt(2,lineItem.getProduct().getId());
-            safeInput.setInt(3,lineItem.getQuantity());
-            safeInput.setFloat(4,lineItem.getProduct().getDefaultPrice());
-            safeInput.executeUpdate();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+        String query1 = "INSERT INTO line_item (order_id, product_id, quantity, default_price)" +
+                "VALUES ((SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1), " + lineItem.getProduct().getId() + "," +
+                lineItem.getQuantity() + "," + lineItem.getProduct().getDefaultPrice()+");";
+        executeQuery(query1);
+
     }
 }
 
