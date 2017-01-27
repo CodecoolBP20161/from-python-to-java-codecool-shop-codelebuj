@@ -2,11 +2,11 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.AddressDao;
 import com.codecool.shop.model.Address;
-import com.codecool.shop.util.IdGenerator;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by levente on 2016.12.14..
@@ -34,20 +34,29 @@ public class AddressDaoJdbc extends ConnectionDb implements AddressDao {
 
     @Override
     public void add(Address address) {
-        int id = IdGenerator.getInstance().getNextId();
-        address.setId(id);
+        String query1 = "INSERT INTO address (address_id, country, city, zipcode, address_info)" +
+                "VALUES ((SELECT COUNT(address_id)+1 from address), '" + address.getCountry() +"','"+address.getCity()+"','"+
+                address.getZipCode() + "','" + address.getAddressInfo()+ "');";
 
-        try {
-            String query = "INSERT INTO address (address_id, country, city, zipcode, address_info) VALUES (?,?,?,?,?);";
-            PreparedStatement safeInput = getConnection().prepareStatement(query);
-            safeInput.setInt(1,address.getId());
-            safeInput.setString(2,address.getCountry());
-            safeInput.setString(3,address.getCity());
-            safeInput.setString(4, address.getZipCode());
-            safeInput.setString(5, address.getAddressInfo());
-            safeInput.executeUpdate();
+        executeQuery(query1);
+        address.setId(findId());
+
+    }
+    public int findId() {
+        String query2 = "SELECT address_id from address ORDER BY address_id DESC LIMIT 1;";
+        int id = 0;
+        try {Connection connection = getConnection();
+            Statement stmt = connection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(query2);
+
+
+                while (resultSet.next()){
+                    id = resultSet.getInt("address_id");
+                }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return id;
     }
 }

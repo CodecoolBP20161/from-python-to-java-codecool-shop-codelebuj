@@ -40,8 +40,6 @@ public class CheckoutController {
 //Gather the data from html form
     public static String constructorOrder(Request req, Response res){
         int orderId = IdGenerator.getInstance().getNextId();
-        int billaddressId = IdGenerator.getInstance().getNextId();
-        int shippaddressId = IdGenerator.getInstance().getNextId();
 
         String firstName = req.queryParams("fname");
         String lastName = req.queryParams("lname");
@@ -58,7 +56,7 @@ public class CheckoutController {
         String shippingAddressInfo = req.queryParams("saaddress");
 
 //create address instance
-        Address billingaddress = new Address(billaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
+        Address billingaddress = new Address(billingCountry,billingCity,billingZip,billingAddressInfo);
         adressDataStore.add(billingaddress);
 
         log.info(String.valueOf(billingaddress.getId()));
@@ -67,19 +65,19 @@ public class CheckoutController {
         if (checkb != null){
             log.info(String.valueOf("billing a "+billingaddress.getId()));
 
-            shippingaddress = new Address(shippaddressId,billingCountry,billingCity,billingZip,billingAddressInfo);
+            shippingaddress = new Address(billingCountry,billingCity,billingZip,billingAddressInfo);
             log.info(String.valueOf("shippin a. "+shippingaddress.getId()));
 
             adressDataStore.add(shippingaddress);
         }else {
             log.info(String.valueOf("billing a2 "+billingaddress.getId()));
-            shippingaddress = new Address(shippaddressId,shippingCountry, shippingCity, shippingZip, shippingAddressInfo);
+            shippingaddress = new Address(shippingCountry, shippingCity, shippingZip, shippingAddressInfo);
             log.info(String.valueOf("shippin a2 "+shippingaddress.getId()));
 
             adressDataStore.add(shippingaddress);
         }
         // create order instance with addresses
-        Order order = new Order(orderId,firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
+        Order order = new Order(firstName, lastName, email, phoneNumber, billingaddress, shippingaddress);
         orderDataStore.add(order);
 
         req.session().attribute("order",order);

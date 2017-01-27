@@ -33,26 +33,15 @@ public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
 
     @Override
     public void add(Order order){
-        try {
-            String query = "INSERT INTO orders (order_id, first_name, last_name, email, phone_number, billing_address, shipping_address) VALUES (?,?,?,?,?,?,?);";
-            PreparedStatement safeInput = getConnection().prepareStatement(query);
-            safeInput.setInt(1,order.getId());
-            safeInput.setString(2,order.getFirstName());
-            safeInput.setString(3,order.getLastName());
-            safeInput.setString(4,order.getEmail());
-            safeInput.setString(5,order.getPhoneNumber());
-            safeInput.setInt(6,order.getBillingAddress().getId());
-            safeInput.setInt(7,order.getShippingAddress().getId());
-            safeInput.executeUpdate();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+        String query1 = "INSERT INTO orders (order_id, first_name, last_name, email, phone_number, billing_address, shipping_address)" + "VALUES ((SELECT COUNT(order_id)+1 FROM orders),'" +
+                order.getFirstName() + "','" +order.getLastName() + "','" +order.getEmail() + "','"+ order.getPhoneNumber() + "'," +
+                order.getBillingAddress().getId() + "," + order.getShippingAddress().getId() +");";
+        executeQuery(query1);
+
     }
 
     public List<Order> getAll(){
         String query = "select * from orders inner join address on orders.shipping_address = address.address_id and orders.billing_address = address.address_id;";
-        Order found = null;
         List<Order> resultList = new ArrayList<>();
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
@@ -120,5 +109,4 @@ public class OrderDaoJdbc extends ConnectionDb implements OrderDao {
         }
         return found;
     }
-
 }
